@@ -1,0 +1,7 @@
+{
+  "name": "UZHAVAN AI",
+  "description": "An AI-powered crop disease expert that identifies plant diseases using MobileNetV3 and provides expert treatment advice.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
