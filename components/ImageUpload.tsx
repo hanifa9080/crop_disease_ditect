@@ -52,10 +52,10 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelect, onOpenA
 
   return (
     <div className="w-full max-w-xl mx-auto">
-      <div 
+      <div
         className={`relative border-2 border-dashed rounded-3xl p-10 text-center transition-all duration-300 cursor-pointer group bg-white
-          ${isDragging 
-            ? 'border-emerald-500 bg-emerald-50 scale-[1.02]' 
+          ${isDragging
+            ? 'border-emerald-500 bg-emerald-50 scale-[1.02]'
             : 'border-emerald-200 hover:border-emerald-400 hover:bg-emerald-50/50 hover:shadow-lg'
           }`}
         onDrop={handleDrop}
@@ -63,14 +63,14 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelect, onOpenA
         onDragLeave={handleDragLeave}
         onClick={() => fileInputRef.current?.click()}
       >
-        <input 
-          type="file" 
-          ref={fileInputRef} 
-          className="hidden" 
+        <input
+          type="file"
+          ref={fileInputRef}
+          className="hidden"
           accept="image/*"
           onChange={handleFileChange}
         />
-        
+
         <div className="mb-6 flex justify-center">
           <div className={`p-5 rounded-full transition-colors ${isDragging ? 'bg-emerald-200 text-emerald-700' : 'bg-emerald-100 text-emerald-600 group-hover:bg-emerald-200 group-hover:text-emerald-700'}`}>
             <Camera size={48} />
@@ -90,43 +90,43 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelect, onOpenA
             Select Photo
           </button>
         </div>
-        
+
         <p className="mt-6 text-xs text-gray-400 font-medium tracking-wide uppercase">
           Supports JPG, PNG, WEBP • Max 5MB
         </p>
       </div>
 
       <div className="mt-8">
-        <button 
-           onClick={(e) => {
-             e.stopPropagation();
-             onOpenAR();
-           }}
-           className="w-full bg-gray-900 text-white p-4 rounded-2xl flex items-center justify-center gap-3 shadow-xl hover:bg-black transition-transform hover:scale-[1.02] group"
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onOpenAR();
+          }}
+          className="w-full bg-gray-900 text-white p-4 rounded-2xl flex items-center justify-center gap-3 shadow-xl hover:bg-black transition-transform hover:scale-[1.02] group"
         >
           <div className="bg-white/20 p-2 rounded-full group-hover:bg-white/30 transition-colors">
             <ScanLine size={20} />
           </div>
           <div className="text-left">
-             <h4 className="font-bold text-sm">Open AR Health Scanner</h4>
-             <p className="text-xs text-gray-400">Detect diseases in real-time</p>
+            <h4 className="font-bold text-sm">Use Camera</h4>
+            <p className="text-xs text-gray-400">Capture plant photos directly</p>
           </div>
         </button>
       </div>
 
       <div className="grid grid-cols-3 gap-4 mt-8 opacity-70">
-         <div className="bg-white p-4 rounded-xl text-center border border-emerald-50 shadow-sm">
-            <div className="text-emerald-500 mb-2 flex justify-center"><ImageIcon size={20}/></div>
-            <p className="text-xs text-gray-600 font-medium">Single Plant</p>
-         </div>
-         <div className="bg-white p-4 rounded-xl text-center border border-emerald-50 shadow-sm">
-            <div className="text-emerald-500 mb-2 flex justify-center"><Layers size={20}/></div>
-            <p className="text-xs text-gray-600 font-medium">Whole Garden</p>
-         </div>
-         <div className="bg-white p-4 rounded-xl text-center border border-emerald-50 shadow-sm">
-            <div className="text-emerald-500 mb-2 flex justify-center"><ImageIcon size={20}/></div>
-            <p className="text-xs text-gray-600 font-medium">Close Ups</p>
-         </div>
+        <div className="bg-white p-4 rounded-xl text-center border border-emerald-50 shadow-sm">
+          <div className="text-emerald-500 mb-2 flex justify-center"><ImageIcon size={20} /></div>
+          <p className="text-xs text-gray-600 font-medium">Single Plant</p>
+        </div>
+        <div className="bg-white p-4 rounded-xl text-center border border-emerald-50 shadow-sm">
+          <div className="text-emerald-500 mb-2 flex justify-center"><Layers size={20} /></div>
+          <p className="text-xs text-gray-600 font-medium">Whole Garden</p>
+        </div>
+        <div className="bg-white p-4 rounded-xl text-center border border-emerald-50 shadow-sm">
+          <div className="text-emerald-500 mb-2 flex justify-center"><ImageIcon size={20} /></div>
+          <p className="text-xs text-gray-600 font-medium">Close Ups</p>
+        </div>
       </div>
     </div>
   );

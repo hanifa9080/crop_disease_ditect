@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { PlantAnalysisResult, HistoryItem, PlantFolder } from './types';
-import { analyzeImage, DiseaseReport } from './services/backendService';
-import { StorageService } from './services/storage';
+import {
+  analyzeImage,
+  DiseaseReport,
+  fetchHistory,
+  saveScanToDB,
+  deleteScanFromDB,
+  moveScanFolder,
+  fetchFolders,
+  createFolderInDB,
+  deleteFolderFromDB,
+} from './services/backendService';
 import { useAuth } from './contexts/AuthContext';
+import { AuthModal } from './components/AuthModal';
+import { LandingPage } from './components/LandingPage';
 import { ImageUpload } from './components/ImageUpload';
 import { AnalysisResult } from './components/AnalysisResult';
 import { HistoryView } from './components/HistoryView';
 import { ChatInterface } from './components/ChatInterface';
-import { ARScanner } from './components/ARScanner';
+import { CameraCapture } from './components/CameraCapture';
+import { AdminLogin } from './components/AdminLogin';
+import { AdminDashboard } from './components/AdminDashboard';
 import { CropRecommendation } from './components/CropRecommendation';
 import { ScanAnimation } from './components/ScanAnimation';
 import { Sprout, Loader2, Leaf, Sun, History as HistoryIcon, ArrowLeft, LogOut, Wheat } from 'lucide-react';
@@ -34,90 +47,110 @@ const App: React.FC = () => {
   const [currentImage, setCurrentImage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showHistory, setShowHistory] = useState(false);
-  const [showAR, setShowAR] = useState(false);
+  const [showCamera, setShowCamera] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [adminChecked, setAdminChecked] = useState(false);
   const [showCropRec, setShowCropRec] = useState(false);
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [folders, setFolders] = useState<PlantFolder[]>([]);
 
   // Auth State
-  const { user, logout, isLoading: authLoading } = useAuth();
+  const { user, logout, isCheckingSession: authLoading } = useAuth();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
-  // Load data when user changes or component mounts
+  // Load history + folders from MySQL when user logs in / changes
   useEffect(() => {
-    // If auth is still loading, wait
     if (authLoading) return;
-
-    // Load data specific to the current user (or guest if user is null)
-    const currentHistory = StorageService.getHistory(user?.id);
-    const currentFolders = StorageService.getFolders(user?.id);
-
-    setHistory(currentHistory);
-    setFolders(currentFolders);
 
     // Reset views on user switch
     setResults(null);
     setCurrentImage(null);
     setShowHistory(false);
-    setShowAR(false);
+    setShowCamera(false);
     setShowCropRec(false);
+
+    if (!user) {
+      // Guest — clear any stale data
+      setHistory([]);
+      setFolders([]);
+      return;
+    }
+
+    // Logged in — fetch from MySQL
+    // Small delay ensures the auth cookie from login response is fully set
+    const timer = setTimeout(async () => {
+      try {
+        const [h, f] = await Promise.all([fetchHistory(), fetchFolders()]);
+        setHistory(h);
+        setFolders(f);
+      } catch (err) {
+        console.error('[App] Failed to load history/folders:', err);
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, [user, authLoading]);
 
-  const saveToHistory = (newResults: PlantAnalysisResult[]) => {
-    // Only save if at least one valid plant is found
-    const validPlants = newResults.filter(r => r.isPlant);
-    if (validPlants.length === 0) return;
-
-    const newItem: HistoryItem = {
-      id: crypto.randomUUID(),
-      timestamp: Date.now(),
-      results: validPlants
-    };
-
-    const updatedHistory = [newItem, ...history];
-    setHistory(updatedHistory);
-    StorageService.saveHistory(updatedHistory, user?.id);
-  };
+  // ── History helpers (MySQL) ──────────────────────────────────────────────
 
   const clearHistory = () => {
-    if (confirm("Are you sure you want to clear your plant history?")) {
-      setHistory([]);
-      StorageService.saveHistory([], user?.id);
+    // No bulk-delete API — just reload (user can delete individually in HistoryView)
+    if (confirm("Reload history from database?")) {
+      if (user) fetchHistory().then(setHistory).catch(console.error);
+      else setHistory([]);
     }
   };
 
-  // Folder Management Functions
-  const createFolder = (name: string) => {
-    const newFolder: PlantFolder = {
-      id: crypto.randomUUID(),
-      name,
-      createdAt: Date.now()
-    };
-    const updatedFolders = [...folders, newFolder];
-    setFolders(updatedFolders);
-    StorageService.saveFolders(updatedFolders, user?.id);
+  // ── Folder helpers (MySQL) ───────────────────────────────────────────────
+
+  const createFolder = async (name: string) => {
+    if (!user) return;
+    try {
+      const newFolder = await createFolderInDB(name);
+      setFolders(prev => [newFolder, ...prev]);
+    } catch (e) {
+      console.error('Failed to create folder', e);
+    }
   };
 
-  const deleteFolder = (folderId: string) => {
-    if (confirm("Delete this folder? Items inside will remain in history but be ungrouped.")) {
-      const updatedFolders = folders.filter(f => f.id !== folderId);
-      setFolders(updatedFolders);
-      StorageService.saveFolders(updatedFolders, user?.id);
-
-      const updatedHistory = history.map(item =>
+  const deleteFolder = async (folderId: string) => {
+    if (!user) return;
+    if (!confirm("Delete this folder? Scans inside will remain in history but be ungrouped.")) return;
+    try {
+      await deleteFolderFromDB(folderId);
+      setFolders(prev => prev.filter(f => f.id !== folderId));
+      // Ungroup scans locally without a full reload
+      setHistory(prev => prev.map(item =>
         item.folderId === folderId ? { ...item, folderId: undefined } : item
-      );
-      setHistory(updatedHistory);
-      StorageService.saveHistory(updatedHistory, user?.id);
+      ));
+    } catch (e) {
+      console.error('Failed to delete folder', e);
     }
   };
 
-  const moveItemsToFolder = (itemIds: string[], folderId: string | undefined) => {
-    const updatedHistory = history.map(item =>
-      itemIds.includes(item.id) ? { ...item, folderId } : item
-    );
-    setHistory(updatedHistory);
-    StorageService.saveHistory(updatedHistory, user?.id);
+  const moveItemsToFolder = async (itemIds: string[], folderId: string | undefined) => {
+    if (!user) return;
+    try {
+      // Fire all PATCH requests in parallel
+      await Promise.all(itemIds.map(id => moveScanFolder(id, folderId ?? null)));
+      // Update local state
+      setHistory(prev => prev.map(item =>
+        itemIds.includes(item.id) ? { ...item, folderId } : item
+      ));
+    } catch (e) {
+      console.error('Failed to move items to folder', e);
+    }
+  };
+
+  const deleteItem = async (itemId: string) => {
+    if (!user) return;
+    try {
+      await deleteScanFromDB(itemId);
+      setHistory(prev => prev.filter(item => item.id !== itemId));
+    } catch (e) {
+      console.error('Failed to delete scan', e);
+    }
   };
 
   const handleImageSelect = async (base64Image: string) => {
@@ -130,7 +163,12 @@ const App: React.FC = () => {
       const reports = await analyzeImage(base64Image);
       const data = reports.map(mapReportToResult);
       setResults(data);
-      saveToHistory(data);
+
+      // Only save to DB if the user is logged in
+      if (user) {
+        const saved = await saveScanToDB(base64Image, reports); // saves image + results
+        setHistory(prev => [saved, ...prev]);
+      }
     } catch (err: any) {
       setError(err.message || "Something went wrong. Please try again.");
     } finally {
@@ -143,13 +181,14 @@ const App: React.FC = () => {
     setCurrentImage(null);
     setError(null);
     setShowHistory(false);
-    setShowAR(false);
+    setShowCamera(false);
     setShowCropRec(false);
   };
 
   const handleHistorySelect = (item: HistoryItem) => {
     setResults(item.results);
-    setCurrentImage(null); // History items do not store images currently to save space
+    // Use the saved image URL from DB if available (e.g. /uploads/{user_id}/{scan_id}.jpg)
+    setCurrentImage(item.imageUrl || null);
     setShowHistory(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -166,17 +205,54 @@ const App: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // ── Admin session check ────────────────────────────────────────────────
+  useEffect(() => {
+    fetch('/api/admin/me', { credentials: 'include' })
+      .then(r => r.ok ? r.json() : null)
+      .then(a => { setIsAdmin(!!a); setAdminChecked(true); })
+      .catch(() => setAdminChecked(true));
+  }, []);
+
+  // ── Admin Route Gate ────────────────────────────────────────────────
+  if (window.location.pathname.startsWith('/admin')) {
+    if (!adminChecked) return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-900">
+        <div className="w-10 h-10 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+    if (!isAdmin) return <AdminLogin onSuccess={() => setIsAdmin(true)} />;
+    return <AdminDashboard onLogout={() => { setIsAdmin(false); window.location.href = '/'; }} />;
+  }
+
+  // ── Mandatory Auth Gate ────────────────────────────────────────────────
+  // While the cookie session is being verified, show a spinner
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-emerald-50">
-        <Loader2 className="animate-spin text-emerald-600" size={32} />
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-emerald-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-emerald-700 font-medium text-sm">Loading UZHAVAN AI...</p>
+        </div>
       </div>
     );
   }
 
-  // If AR mode is active, render it fullscreen
-  if (showAR) {
-    return <ARScanner onClose={() => setShowAR(false)} />;
+  // Once session check is complete — show landing page to guests (auth is MANDATORY)
+  if (!user) {
+    return <LandingPage />;
+  }
+
+  // ── Camera Fullscreen ────────────────────────────────────────────────
+  if (showCamera) {
+    return (
+      <CameraCapture
+        onCapture={(base64) => {
+          setShowCamera(false);
+          handleImageSelect(base64);
+        }}
+        onClose={() => setShowCamera(false)}
+      />
+    );
   }
 
   return (
@@ -253,7 +329,17 @@ const App: React.FC = () => {
               <span className="hidden sm:inline">History</span>
             </button>
 
-            {/* User Profile - Only visible if already logged in (persistence) */}
+            {/* Sign In button — shown only to guests */}
+            {!user && !authLoading && (
+              <button
+                onClick={() => setShowAuthModal(true)}
+                className="px-4 py-2 rounded-full text-sm font-semibold bg-emerald-600 text-white hover:bg-emerald-700 shadow-md shadow-emerald-200 transition-all duration-200 active:scale-95"
+              >
+                Sign In
+              </button>
+            )}
+
+            {/* User Profile — shown when logged in */}
             <div className="relative profile-menu-container">
               {user && (
                 <button
@@ -319,16 +405,36 @@ const App: React.FC = () => {
         {/* State: History View */}
         {
           !analyzing && showHistory && (
-            <HistoryView
-              history={history}
-              folders={folders}
-              onSelect={handleHistorySelect}
-              onClear={clearHistory}
-              onClose={() => setShowHistory(false)}
-              onCreateFolder={createFolder}
-              onDeleteFolder={deleteFolder}
-              onMoveItems={moveItemsToFolder}
-            />
+            !user ? (
+              // Guest — prompt to sign in
+              <div className="flex flex-col items-center justify-center min-h-[60vh] animate-fade-in-up text-center">
+                <div className="bg-white rounded-3xl shadow-xl border border-emerald-100 p-12 max-w-md">
+                  <div className="bg-emerald-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <HistoryIcon size={28} className="text-emerald-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">Sign in to view history</h3>
+                  <p className="text-gray-500 text-sm mb-6">Your scan history is saved securely in the database. Sign in to access it from any device.</p>
+                  <button
+                    onClick={() => setShowAuthModal(true)}
+                    className="bg-emerald-600 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-emerald-700 transition-all shadow-md shadow-emerald-200"
+                  >
+                    Sign In
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <HistoryView
+                history={history}
+                folders={folders}
+                onSelect={handleHistorySelect}
+                onClear={clearHistory}
+                onClose={() => setShowHistory(false)}
+                onCreateFolder={createFolder}
+                onDeleteFolder={deleteFolder}
+                onMoveItems={moveItemsToFolder}
+                onDeleteItem={deleteItem}
+              />
+            )
           )
         }
 
@@ -358,7 +464,7 @@ const App: React.FC = () => {
 
               <ImageUpload
                 onImageSelect={handleImageSelect}
-                onOpenAR={() => setShowAR(true)}
+                onOpenAR={() => setShowCamera(true)}
               />
 
               <div className="mt-16 text-center">
@@ -383,10 +489,13 @@ const App: React.FC = () => {
       </main >
 
       {/* Floating Chat Interface (Hidden in AR Mode) */}
-      {!showAR && <ChatInterface />}
+      {!showCamera && <ChatInterface />}
+
+      {/* Auth Modal — shown to guests when they click Sign In */}
+      <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
 
       {
-        !showAR && (
+        !showCamera && (
           <footer className="text-center py-10 text-gray-500 text-sm space-y-3">
             <div className="max-w-md mx-auto bg-emerald-50 border border-emerald-100 rounded-2xl p-5">
               <p className="text-lg font-semibold text-emerald-800 leading-relaxed" style={{ fontFamily: "'Noto Sans Tamil', sans-serif" }}>

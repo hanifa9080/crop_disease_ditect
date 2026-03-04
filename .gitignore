@@ -24,3 +24,25 @@ dist-ssr
 *.sw?
 *.env 
 *.gguf
+*.txt
+*.md
+*.png
+*.jpg
+
+
+# MySQL credentials — never commit
+backend/.env
+
+# User-uploaded plant images
+backend/uploads/
+
+# Python caches and compiled files
+__pycache__/
+*.pyc
+
+# Local Test Scripts and Executables
+test_*.py
+ngrok.exe
+check_kb_urls.py
+*.pdf
+*.docx

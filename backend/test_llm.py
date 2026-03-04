@@ -12,8 +12,8 @@ if not os.path.exists(model_path):
 try:
     llm = Llama(
         model_path=model_path,
-        n_ctx=1024,
-        n_batch=256, # Try slightly larger batch
+        n_ctx=2048,
+        n_batch=512,
         verbose=True
     )
     print("Success!")

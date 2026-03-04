@@ -46,8 +46,9 @@ export interface PlantFolder {
 export interface HistoryItem {
   id: string;
   timestamp: number;
-  results: PlantAnalysisResult[]; 
-  folderId?: string; // ID of the folder this item belongs to
+  results: PlantAnalysisResult[];
+  folderId?: string;               // ID of the folder this item belongs to
+  imageUrl?: string | null;        // URL path from DB e.g. /uploads/{user_id}/{scan_id}.jpg
 }
 
 export interface ChatSource {
@@ -70,26 +71,4 @@ export interface User {
   name: string;
   avatar?: string;
   joinedAt: number;
-}
-
-export type ARIssueType = 'disease' | 'nutrient' | 'dryness' | 'pest' | 'healthy' | 'unknown';
-
-export interface ARDetection {
-  label: string;
-  type: ARIssueType;
-  confidence: number;
-  box_2d: number[]; // [ymin, xmin, ymax, xmax] 0-1000
-}
-
-export interface ARDetailedReport {
-  disease_name: string;
-  confidence_score: number;
-  affected_area_description: string;
-  symptoms_observed: string[];
-  possible_causes: string[];
-  severity_level: 'Low' | 'Medium' | 'High';
-  immediate_actions: string[];
-  long_term_prevention: string[];
-  care_score: number; // 1-10
-  time_to_recovery: string;
 }

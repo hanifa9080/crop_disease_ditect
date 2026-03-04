@@ -11,8 +11,9 @@ MAX_IMAGE_SIZE_MB = 10
 
 # Gemma LLM
 GEMMA_PATH = MODEL_DIR / "gemma-3-1b-it-Q4_K_M.gguf"
-N_CTX = 1024
+N_CTX = 2048
 N_THREADS = 6
+N_BATCH = 512
 
 # 27 classes from PlantVillage dataset (alphabetical order as used by ImageFolder)
 CLASS_NAMES = [

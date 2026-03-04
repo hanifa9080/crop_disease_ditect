@@ -21,7 +21,10 @@ import {
   Twitter,
   MessageCircle,
   Volume2,
-  VolumeX
+  VolumeX,
+  Download,
+  FileDown,
+  FileText
 } from 'lucide-react';
 
 interface AnalysisResultProps {
@@ -29,6 +32,323 @@ interface AnalysisResultProps {
   onReset: () => void;
   image?: string | null;
 }
+
+// ── Download Utility Functions (exported for HistoryView) ─────────────────
+
+export function buildReportHTML(
+  result: PlantAnalysisResult,
+  imageUrl?: string | null
+): string {
+  const isHealthy = !result.issues?.diseases?.detected;
+  const statusLabel = isHealthy
+    ? '✓ Healthy'
+    : (result.diagnosis?.split('.')[0] || 'Disease Detected');
+  const statusColor = isHealthy ? '#059669' : '#dc2626';
+  const statusBg = isHealthy ? 'rgba(16,185,129,0.18)' : 'rgba(239,68,68,0.18)';
+
+  const issueRows = result.issues
+    ? Object.entries(result.issues).map(([key, val]) => {
+      const issue = val as any;
+      const label = key.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase());
+      return `<tr>
+          <td style="padding:10px 14px;border-bottom:1px solid #f3f4f6;
+                     font-weight:600;color:#374151;width:36%">${label}</td>
+          <td style="padding:10px 14px;border-bottom:1px solid #f3f4f6;
+                     color:${issue.detected ? '#dc2626' : '#059669'}">
+            ${issue.detected ? '⚠ ' + issue.details : '✓ Looks healthy'}
+          </td>
+        </tr>`;
+    }).join('') : '';
+
+  const treatmentHTML = result.treatmentPlan?.map((step, i) => `
+    <div style="display:flex;gap:14px;margin-bottom:18px;align-items:flex-start">
+      <div style="background:#059669;color:white;min-width:28px;height:28px;
+                  border-radius:50%;display:flex;align-items:center;
+                  justify-content:center;font-weight:700;font-size:13px;
+                  flex-shrink:0">${i + 1}</div>
+      <div>
+        <div style="font-weight:700;color:#1f2937;margin-bottom:3px">${step.title}</div>
+        <div style="color:#4b5563;font-size:14px;line-height:1.6">${step.instruction}</div>
+      </div>
+    </div>`).join('') || '';
+
+  const tipsHTML = result.preventionTips?.map(tip =>
+    `<div style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #d1fae5">
+      <span style="color:#059669;font-size:18px;line-height:1;flex-shrink:0">•</span>
+      <span style="color:#065f46;font-size:14px;line-height:1.5">${tip}</span>
+    </div>`).join('') || '';
+
+  const resourcesHTML = result.expertResources?.map(r =>
+    `<div style="background:#f0fdf4;border:1px solid #6ee7b7;border-radius:10px;
+                 padding:13px;margin-bottom:9px">
+      <div style="font-weight:700;color:#065f46;margin-bottom:3px">${r.title}</div>
+      <div style="font-size:13px;color:#6b7280;margin-bottom:5px">${r.description}</div>
+      <a href="${r.url}" style="font-size:12px;color:#059669;word-break:break-all">${r.url}</a>
+    </div>`).join('') || '';
+
+  const imgHTML = imageUrl
+    ? `<img src="${imageUrl}" style="width:100%;max-height:220px;object-fit:cover;
+                                      border-radius:12px;margin-bottom:22px" />`
+    : '';
+
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<title>UZHAVAN AI — ${result.plantName}</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',Arial,sans-serif;color:#1f2937;background:#f3f4f6}
+  @media print{
+    body{background:white}
+    .no-print{display:none!important}
+    .page{box-shadow:none!important;margin:0!important}
+  }
+  .no-print{background:#059669;padding:14px;text-align:center}
+  .save-btn{background:white;color:#059669;border:none;padding:10px 26px;
+            border-radius:8px;font-size:14px;font-weight:700;cursor:pointer}
+  .hint{color:rgba(255,255,255,0.75);font-size:11px;margin-top:5px}
+  .page{max-width:780px;margin:0 auto;background:white;
+        box-shadow:0 4px 28px rgba(0,0,0,0.1)}
+  .hdr{background:linear-gradient(135deg,#059669,#064e3b);
+       padding:30px 34px;color:white;position:relative;overflow:hidden}
+  .hdr-label{font-size:11px;font-weight:700;letter-spacing:2px;
+             text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:7px}
+  .plant-name{font-size:34px;font-weight:900;margin-bottom:13px}
+  .badges{display:flex;gap:9px;flex-wrap:wrap}
+  .badge{padding:4px 13px;border-radius:20px;font-size:12px;font-weight:700;
+         border:1px solid rgba(255,255,255,0.3)}
+  .b-conf{background:rgba(255,255,255,0.15)}
+  .b-status{background:${statusBg};color:${statusColor};border-color:${statusColor}}
+  .hdr-date{position:absolute;top:26px;right:30px;text-align:right;
+            font-size:11px;color:rgba(255,255,255,0.6);line-height:1.7}
+  .body{padding:26px 34px}
+  .sec{margin-bottom:24px}
+  .sec-title{font-size:12px;font-weight:800;color:#374151;text-transform:uppercase;
+             letter-spacing:1.2px;display:flex;align-items:center;gap:7px;
+             padding-bottom:9px;border-bottom:2px solid #f3f4f6;margin-bottom:13px}
+  .diag{background:#f0fdf4;border-left:4px solid #059669;padding:14px 18px;
+        border-radius:0 10px 10px 0;font-size:15px;line-height:1.7}
+  table{width:100%;border-collapse:collapse;border:1px solid #f3f4f6;
+        border-radius:10px;overflow:hidden}
+  thead th{background:#f9fafb;padding:9px 14px;font-size:11px;font-weight:700;
+           color:#6b7280;text-transform:uppercase;text-align:left}
+  .footer{background:#064e3b;color:rgba(255,255,255,0.65);
+          padding:18px 34px;text-align:center;font-size:12px}
+  .footer-tamil{font-size:13px;color:rgba(255,255,255,0.88);
+                margin-bottom:4px;font-weight:600}
+</style></head><body>
+<div class="no-print">
+  <button class="save-btn" onclick="window.print()">⬇ Save as PDF</button>
+  <p class="hint">Choose "Save as PDF" in the print dialog</p>
+</div>
+<div class="page">
+  <div class="hdr">
+    <div class="hdr-date">
+      Generated<br>${new Date().toLocaleDateString()}<br>${new Date().toLocaleTimeString()}
+    </div>
+    <div class="hdr-label">🌿 UZHAVAN AI — AI Crop Disease Expert</div>
+    <div class="plant-name">${result.plantName}</div>
+    <div class="badges">
+      <span class="badge b-conf">${Number(result.confidence).toFixed(1)}% Confidence</span>
+      <span class="badge b-status">${statusLabel}</span>
+    </div>
+  </div>
+  <div class="body">
+    ${imgHTML}
+    <div class="sec">
+      <div class="sec-title"><span>🩺</span> Doctor's Diagnosis</div>
+      <div class="diag">${result.diagnosis}</div>
+    </div>
+    ${result.issues ? `<div class="sec">
+      <div class="sec-title"><span>🔍</span> Health Check Results</div>
+      <table><thead><tr><th>Category</th><th>Status</th></tr></thead>
+      <tbody>${issueRows}</tbody></table>
+    </div>` : ''}
+    ${result.treatmentPlan?.length ? `<div class="sec">
+      <div class="sec-title"><span>💊</span> Treatment Plan</div>
+      <div style="background:#f0fdf4;border-radius:11px;padding:18px">
+        ${treatmentHTML}
+      </div>
+    </div>` : ''}
+    ${result.preventionTips?.length ? `<div class="sec">
+      <div class="sec-title"><span>🛡</span> Prevention &amp; Care Tips</div>
+      <div style="background:#f9fafb;border-radius:11px;padding:14px">
+        ${tipsHTML}
+      </div>
+    </div>` : ''}
+    ${result.expertResources?.length ? `<div class="sec">
+      <div class="sec-title"><span>📚</span> Expert Resources</div>
+      ${resourcesHTML}
+    </div>` : ''}
+  </div>
+  <div class="footer">
+    <div class="footer-tamil">
+      உழுதுண்டு வாழ்வாரே வாழ்வார் — Thiruvalluvar (Kural 1033)
+    </div>
+    © ${new Date().getFullYear()} UZHAVAN AI &nbsp;|&nbsp; AI advice is a guide only
+  </div>
+</div>
+</body></html>`;
+}
+
+export function buildReportTXT(result: PlantAnalysisResult): string {
+  const isHealthy = !result.issues?.diseases?.detected;
+  const line = '─'.repeat(54);
+  let t = `UZHAVAN AI — Crop Disease Report\nGenerated : ${new Date().toLocaleString()}\n${line}\n\n`;
+  t += `PLANT     : ${result.plantName}\n`;
+  t += `CONFIDENCE: ${Number(result.confidence).toFixed(1)}%\n`;
+  t += `STATUS    : ${isHealthy ? '✓ Healthy' : (result.diagnosis?.split('.')[0] || 'Disease Detected')}\n\n`;
+  t += `DIAGNOSIS\n${line}\n${result.diagnosis}\n\n`;
+  if (result.issues) {
+    t += `HEALTH CHECKS\n${line}\n`;
+    Object.entries(result.issues).forEach(([key, val]) => {
+      const issue = val as any;
+      const label = key.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()).padEnd(22);
+      t += `${label}${issue.detected ? '⚠  ' + issue.details : '✓  Looks healthy'}\n`;
+    });
+    t += '\n';
+  }
+  if (result.treatmentPlan?.length) {
+    t += `TREATMENT PLAN\n${line}\n`;
+    result.treatmentPlan.forEach((s, i) => { t += `${i + 1}. ${s.title}\n   ${s.instruction}\n`; });
+    t += '\n';
+  }
+  if (result.preventionTips?.length) {
+    t += `PREVENTION TIPS\n${line}\n`;
+    result.preventionTips.forEach((tip, i) => { t += `${i + 1}. ${tip}\n`; });
+    t += '\n';
+  }
+  if (result.expertResources?.length) {
+    t += `EXPERT RESOURCES\n${line}\n`;
+    result.expertResources.forEach(r => { t += `• ${r.title}\n  ${r.url}\n`; });
+  }
+  t += `\n${line}\n© ${new Date().getFullYear()} UZHAVAN AI — உழவன் AI\n`;
+  return t;
+}
+
+export function downloadAsPDF(result: PlantAnalysisResult, imageUrl?: string | null) {
+  const win = window.open('', '_blank');
+  if (win) {
+    win.document.write(buildReportHTML(result, imageUrl));
+    win.document.close();
+  }
+}
+
+export function downloadAsTXT(result: PlantAnalysisResult) {
+  const filename = `UZHAVAN_${result.plantName.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0, 10)}.txt`;
+  const blob = new Blob([buildReportTXT(result)], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ── Download Modal (exported for HistoryView) ──────────────────────────────
+
+export const DownloadModal: React.FC<{
+  result: PlantAnalysisResult;
+  imageUrl?: string | null;
+  onClose: () => void;
+}> = ({ result, imageUrl, onClose }) => {
+  const [busy, setBusy] = useState<'pdf' | 'txt' | null>(null);
+
+  const go = (type: 'pdf' | 'txt') => {
+    setBusy(type);
+    setTimeout(() => {
+      if (type === 'pdf') downloadAsPDF(result, imageUrl);
+      else downloadAsTXT(result);
+      setBusy(null);
+      onClose();
+    }, 280);
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-[110] flex items-end sm:items-center justify-center
+                 p-4 bg-black/50 backdrop-blur-sm animate-fade-in"
+    >
+      <div className="absolute inset-0" onClick={onClose} />
+
+      <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-sm
+                      overflow-hidden animate-scale-up">
+
+        <div className="bg-gradient-to-br from-emerald-600 to-emerald-800
+                        px-6 pt-6 pb-8 text-white">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors"
+          >
+            <X size={20} />
+          </button>
+          <div className="flex items-center gap-3 mb-2">
+            <div className="bg-white/20 p-2.5 rounded-xl backdrop-blur-sm">
+              <Download size={20} />
+            </div>
+            <h3 className="text-lg font-bold">Download Report</h3>
+          </div>
+          <p className="text-emerald-100 text-sm">
+            {result.plantName}
+            <span className="ml-2 opacity-70">
+              · {Number(result.confidence).toFixed(1)}% confidence
+            </span>
+          </p>
+        </div>
+
+        <div className="relative -mt-4 mx-4 bg-white rounded-2xl shadow-lg
+                        border border-gray-100 overflow-hidden">
+
+          <button
+            onClick={() => go('pdf')}
+            disabled={busy !== null}
+            className="w-full flex items-center gap-4 px-5 py-4 hover:bg-emerald-50
+                       transition-colors group border-b border-gray-100 disabled:opacity-50"
+          >
+            <div className="bg-red-50 text-red-500 p-2.5 rounded-xl
+                            group-hover:scale-110 transition-transform shrink-0">
+              <FileDown size={22} />
+            </div>
+            <div className="flex-1 text-left">
+              <p className="font-bold text-gray-800 text-sm">Save as PDF</p>
+              <p className="text-xs text-gray-400 mt-0.5">Beautifully designed report — print ready</p>
+            </div>
+            {busy === 'pdf'
+              ? <div className="w-4 h-4 border-2 border-emerald-400 border-t-transparent
+                               rounded-full animate-spin shrink-0" />
+              : <span className="text-gray-300 group-hover:text-emerald-500 font-bold">›</span>
+            }
+          </button>
+
+          <button
+            onClick={() => go('txt')}
+            disabled={busy !== null}
+            className="w-full flex items-center gap-4 px-5 py-4 hover:bg-blue-50
+                       transition-colors group disabled:opacity-50"
+          >
+            <div className="bg-blue-50 text-blue-500 p-2.5 rounded-xl
+                            group-hover:scale-110 transition-transform shrink-0">
+              <FileText size={22} />
+            </div>
+            <div className="flex-1 text-left">
+              <p className="font-bold text-gray-800 text-sm">Download Text (.txt)</p>
+              <p className="text-xs text-gray-400 mt-0.5">Plain text — opens in any app instantly</p>
+            </div>
+            {busy === 'txt'
+              ? <div className="w-4 h-4 border-2 border-blue-400 border-t-transparent
+                               rounded-full animate-spin shrink-0" />
+              : <span className="text-gray-300 group-hover:text-blue-400 font-bold">›</span>
+            }
+          </button>
+        </div>
+
+        <p className="text-center text-xs text-gray-400 py-4">
+          Includes diagnosis, health checks, treatment &amp; tips
+        </p>
+      </div>
+    </div>
+  );
+};
+
+// ── Health Indicator ──────────────────────────────────────────────────────
 
 const HealthIndicator: React.FC<{ label: string; issue: IssueCheck; icon: React.ReactNode }> = ({ label, issue, icon }) => {
   return (
@@ -50,6 +370,7 @@ const HealthIndicator: React.FC<{ label: string; issue: IssueCheck; icon: React.
 
 const SinglePlantResult: React.FC<{ result: PlantAnalysisResult, index: number, image?: string | null }> = ({ result, index, image }) => {
   const [showShare, setShowShare] = useState(false);
+  const [showDownload, setShowDownload] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [voicesReady, setVoicesReady] = useState(false);
@@ -181,7 +502,15 @@ const SinglePlantResult: React.FC<{ result: PlantAnalysisResult, index: number, 
 
         {image && (
           <>
-            <img src={image} alt={result.plantName} className="absolute inset-0 w-full h-full object-cover opacity-60" />
+            <img
+              src={image}
+              alt={result.plantName}
+              className="absolute inset-0 w-full h-full object-cover opacity-60"
+              onError={(e) => {
+                // Hide image gracefully if file was deleted from disk or URL is broken
+                (e.target as HTMLImageElement).style.display = 'none';
+              }}
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent"></div>
           </>
         )}
@@ -210,6 +539,13 @@ const SinglePlantResult: React.FC<{ result: PlantAnalysisResult, index: number, 
             title="Share Report"
           >
             <Share2 size={20} />
+          </button>
+          <button
+            onClick={() => setShowDownload(true)}
+            className="bg-white/20 hover:bg-white/30 p-2 rounded-full backdrop-blur-sm transition-colors text-white"
+            title="Download Report"
+          >
+            <Download size={20} />
           </button>
         </div>
 
@@ -246,8 +582,8 @@ const SinglePlantResult: React.FC<{ result: PlantAnalysisResult, index: number, 
         <button
           onClick={handleSpeak}
           className={`w-full flex items-center justify-center gap-3 py-3.5 px-6 rounded-2xl font-semibold text-base transition-all duration-300 mb-6 ${isSpeaking
-              ? 'bg-amber-500 text-white shadow-lg shadow-amber-200 animate-pulse'
-              : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border-2 border-emerald-200 hover:border-emerald-300 hover:shadow-md'
+            ? 'bg-amber-500 text-white shadow-lg shadow-amber-200 animate-pulse'
+            : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border-2 border-emerald-200 hover:border-emerald-300 hover:shadow-md'
             }`}
         >
           {isSpeaking ? (
@@ -410,6 +746,15 @@ const SinglePlantResult: React.FC<{ result: PlantAnalysisResult, index: number, 
             </div>
           </div>
         </div>
+      )}
+
+      {/* Download Modal */}
+      {showDownload && (
+        <DownloadModal
+          result={result}
+          imageUrl={image}
+          onClose={() => setShowDownload(false)}
+        />
       )}
     </div>
   );

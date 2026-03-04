@@ -161,3 +161,79 @@ export const checkHealth = async (): Promise<{ status: string }> => {
     }
     return response.json();
 };
+
+
+// ─────────── Auth & History (MySQL-backed) ───────────
+
+/**
+ * Shared helper — always includes the HTTP-only cookie so the backend
+ * can identify the logged-in user on every protected request.
+ */
+const authFetch = (url: string, opts: RequestInit = {}) =>
+    fetch(`${BACKEND_URL}${url}`, { ...opts, credentials: 'include' });
+
+
+// ── History ───────────────────────────────────────────────────────────────────
+
+/** Load all scan history for the logged-in user. */
+export const fetchHistory = async (): Promise<any[]> => {
+    const r = await authFetch('/history');
+    if (!r.ok) throw new Error('Failed to load scan history');
+    return (await r.json()).history;
+};
+
+/**
+ * Save a completed scan to the database + write image to disk.
+ * Call this AFTER analyzeImage() returns successfully.
+ * @param image  base64 string (or null for AR scans that have no image)
+ * @param results  array of DiseaseReport objects from the AI
+ */
+export const saveScanToDB = async (image: string | null, results: any[]): Promise<any> => {
+    const r = await authFetch('/history', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image, results }),
+    });
+    if (!r.ok) throw new Error('Failed to save scan');
+    return r.json();
+};
+
+/** Delete a scan and its image file from disk. */
+export const deleteScanFromDB = async (scanId: string): Promise<void> => {
+    await authFetch(`/history/${scanId}`, { method: 'DELETE' });
+};
+
+/** Move a scan into a folder (pass null to ungroup it). */
+export const moveScanFolder = async (scanId: string, folderId: string | null): Promise<void> => {
+    await authFetch(`/history/${scanId}/folder`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ folder_id: folderId }),
+    });
+};
+
+
+// ── Folders ───────────────────────────────────────────────────────────────────
+
+/** List all folders for the logged-in user. */
+export const fetchFolders = async (): Promise<any[]> => {
+    const r = await authFetch('/folders');
+    if (!r.ok) throw new Error('Failed to load folders');
+    return (await r.json()).folders;
+};
+
+/** Create a new folder and return it. */
+export const createFolderInDB = async (name: string): Promise<any> => {
+    const r = await authFetch('/folders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name }),
+    });
+    if (!r.ok) throw new Error('Failed to create folder');
+    return r.json();
+};
+
+/** Delete a folder (scans inside are ungrouped, not deleted). */
+export const deleteFolderFromDB = async (folderId: string): Promise<void> => {
+    await authFetch(`/folders/${folderId}`, { method: 'DELETE' });
+};

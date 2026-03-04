@@ -1,18 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Mail, Lock, User as UserIcon, Loader2, ArrowRight } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialMode?: 'login' | 'signup';   // optional — defaults to 'login'
 }
 
-export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
-  const [mode, setMode] = useState<'login' | 'signup'>('login');
+export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode }) => {
+  const [mode, setMode] = useState<'login' | 'signup'>(initialMode || 'login');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login, register, error, clearError, isLoading } = useAuth();
+
+  // Sync mode when initialMode changes (e.g. switching Sign In ↔ Get Started on landing page)
+  useEffect(() => {
+    if (initialMode) setMode(initialMode);
+  }, [initialMode]);
+
+  // Clear errors and inputs when the modal is opened
+  useEffect(() => {
+    if (isOpen) {
+      clearError();
+      setPassword('');
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -147,11 +161,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           </div>
         </div>
 
-        {/* Footer info for demo */}
-        <div className="bg-gray-50 p-4 text-center border-t border-gray-100">
-          <p className="text-[10px] text-gray-400">
-            For demo purposes, accounts are stored locally in your browser.
-            Real implementation would connect to a cloud database.
+        {/* Storage info */}
+        <div className="bg-emerald-50 p-4 text-center border-t border-emerald-100">
+          <p className="text-[10px] text-emerald-700 font-medium">
+            🔒 Your account and scan history are stored securely in the local MySQL database.
           </p>
         </div>
       </div>

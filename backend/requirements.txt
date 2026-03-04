@@ -7,3 +7,6 @@ Pillow
 llama-cpp-python
 pydantic
 python-dotenv
+mysql-connector-python
+bcrypt
+aiofiles

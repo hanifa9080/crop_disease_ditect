@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User } from '../types';
-import { StorageService } from '../services/storage';
 
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
+  isCheckingSession: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
@@ -14,70 +14,47 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Mock "Database" for users stored in localStorage for demo purposes
-// In a real app, this would be on a backend server
-const USERS_DB_KEY = 'floronova_users_db';
-const SESSION_KEY = 'floronova_session_user';
-
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isCheckingSession, setIsCheckingSession] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Initialize session
+  // On app load — check if the HTTP-only cookie session is still valid
+  // by hitting /auth/me. The browser sends the cookie automatically.
   useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const storedUser = localStorage.getItem(SESSION_KEY);
-        if (storedUser) {
-          setUser(JSON.parse(storedUser));
-        }
-      } catch (e) {
-        console.error("Session restore failed", e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    checkSession();
+    fetch('/api/auth/me', { credentials: 'include' })
+      .then(r => r.ok ? r.json() : null)
+      .then(u => setUser(u ? {
+        id: u.id,
+        name: u.name,
+        email: u.email,
+        avatar: u.avatar_url,
+        joinedAt: u.joined_at,
+      } : null))
+      .catch(() => setUser(null))
+      .finally(() => setIsCheckingSession(false));
   }, []);
-
-  const getUsersDB = (): Record<string, any> => {
-    const db = localStorage.getItem(USERS_DB_KEY);
-    return db ? JSON.parse(db) : {};
-  };
-
-  const saveUsersDB = (db: Record<string, any>) => {
-    localStorage.setItem(USERS_DB_KEY, JSON.stringify(db));
-  };
 
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     setError(null);
-
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 800));
-
     try {
-      const db = getUsersDB();
-      const userRecord = Object.values(db).find((u: any) => u.email === email && u.password === password) as any;
-
-      if (!userRecord) {
-        throw new Error("Invalid email or password");
+      const r = await fetch('/api/auth/login', {
+        method: 'POST',
+        credentials: 'include',          // sends + receives the cookie
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      if (!r.ok) {
+        const e = await r.json();
+        throw new Error(e.detail || 'Login failed');
       }
-
-      const userData: User = {
-        id: userRecord.id,
-        name: userRecord.name,
-        email: userRecord.email,
-        joinedAt: userRecord.joinedAt,
-        avatar: userRecord.avatar
-      };
-
-      setUser(userData);
-      localStorage.setItem(SESSION_KEY, JSON.stringify(userData));
-    } catch (err: any) {
-      setError(err.message);
-      throw err;
+      const u = await r.json();
+      setUser({ id: u.id, name: u.name, email: u.email, avatar: u.avatar, joinedAt: u.joinedAt });
+    } catch (e: any) {
+      setError(e.message);
+      throw e;
     } finally {
       setIsLoading(false);
     }
@@ -86,70 +63,45 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const register = async (name: string, email: string, password: string) => {
     setIsLoading(true);
     setError(null);
-
-    await new Promise(resolve => setTimeout(resolve, 800));
-
     try {
-      const db = getUsersDB();
-
-      // Check if email exists
-      if (Object.values(db).some((u: any) => u.email === email)) {
-        throw new Error("User with this email already exists");
+      const r = await fetch('/api/auth/register', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password }),
+      });
+      if (!r.ok) {
+        const e = await r.json();
+        throw new Error(e.detail || 'Registration failed');
       }
-
-      const newUser = {
-        id: crypto.randomUUID(),
-        name,
-        email,
-        password, // In real app, never store plain text!
-        joinedAt: Date.now(),
-        // Generate offline-friendly SVG avatar
-        avatar: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%2310b981"/><text x="50" y="50" dy=".35em" text-anchor="middle" font-size="40" fill="white" font-family="sans-serif">${name.charAt(0).toUpperCase()}</text></svg>`
-      };
-
-      db[newUser.id] = newUser;
-      saveUsersDB(db);
-
-      const userData: User = {
-        id: newUser.id,
-        name: newUser.name,
-        email: newUser.email,
-        joinedAt: newUser.joinedAt,
-        avatar: newUser.avatar
-      };
-
-      setUser(userData);
-      localStorage.setItem(SESSION_KEY, JSON.stringify(userData));
-
-      // Migrate guest data to new user
-      StorageService.migrateGuestData(userData.id);
-
-    } catch (err: any) {
-      setError(err.message);
-      throw err;
+      const u = await r.json();
+      setUser({ id: u.id, name: u.name, email: u.email, avatar: u.avatar, joinedAt: u.joinedAt });
+    } catch (e: any) {
+      setError(e.message);
+      throw e;
     } finally {
       setIsLoading(false);
     }
   };
 
   const logout = () => {
+    // Tell the backend to clear the cookie, then wipe local state
+    fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
     setUser(null);
-    localStorage.removeItem(SESSION_KEY);
   };
 
-  const clearError = () => setError(null);
-
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, register, logout, error, clearError }}>
+    <AuthContext.Provider value={{
+      user, isLoading, isCheckingSession, login, register, logout,
+      error, clearError: () => setError(null)
+    }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error('useAuth must be used inside AuthProvider');
+  return ctx;
 };

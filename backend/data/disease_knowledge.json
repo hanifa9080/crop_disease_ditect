@@ -1,0 +1,828 @@
+{
+    "version": "1.0",
+    "supported_classes": 27,
+    "diseases": [
+        {
+            "class_id": "Corn___Cercospora_leaf_spot Gray_leaf_spot",
+            "crop": "Corn",
+            "disease": "Cercospora Leaf Spot (Gray Leaf Spot)",
+            "is_healthy": false,
+            "severity": "High",
+            "symptoms": [
+                "Rectangular gray-tan lesions parallel to leaf veins",
+                "Tan/gray center with dark brown borders",
+                "Entire leaf death in severe cases"
+            ],
+            "causes": [
+                "Fungus: Cercospora zeae-maydis",
+                "Warm humid cloudy weather",
+                "Infected crop residue"
+            ],
+            "treatment": [
+                "Apply Propiconazole or Azoxystrobin fungicide at first sign",
+                "Remove and destroy infected debris",
+                "Improve air circulation"
+            ],
+            "prevention": [
+                "Use resistant corn hybrids",
+                "Crop rotation — no corn same field 2 years",
+                "Avoid overhead irrigation",
+                "Till soil after harvest"
+            ],
+            "expert_resources": [
+                {
+                    "title": "Gray Leaf Spot — UMN Extension",
+                    "url": "https://extension.umn.edu/corn-pest-management/gray-leaf-spot"
+                }
+            ]
+        },
+        {
+            "class_id": "Corn___Common_rust",
+            "crop": "Corn",
+            "disease": "Common Rust",
+            "is_healthy": false,
+            "severity": "Medium",
+            "symptoms": [
+                "Small circular to elongated brown pustules on both leaf surfaces",
+                "Pustules turn black as season progresses",
+                "Leaves yellow and die in severe infection"
+            ],
+            "causes": [
+                "Fungus: Puccinia sorghi",
+                "Wind-blown spores",
+                "Cool temperatures 60-77F with high humidity"
+            ],
+            "treatment": [
+                "Apply Mancozeb or Trifloxystrobin fungicide",
+                "Scout fields regularly — treat early"
+            ],
+            "prevention": [
+                "Plant rust-resistant corn varieties",
+                "Early planting avoids peak rust season",
+                "Monitor weather for high-risk periods"
+            ],
+            "expert_resources": [
+                {
+                    "title": "Common Rust — Purdue Extension",
+                    "url": "https://www.extension.purdue.edu/extmedia/BP/BP-77-W.pdf"
+                }
+            ]
+        },
+        {
+            "class_id": "Corn___Northern_Leaf_Blight",
+            "crop": "Corn",
+            "disease": "Northern Leaf Blight",
+            "is_healthy": false,
+            "severity": "High",
+            "symptoms": [
+                "Long cigar-shaped gray-green lesions 1-6 inches",
+                "Tan to gray color with wavy edges",
+                "Dark green water-soaked borders initially"
+            ],
+            "causes": [
+                "Fungus: Exserohilum turcicum",
+                "Cool 65-80F with high humidity",
+                "Overwinters in infected corn debris"
+            ],
+            "treatment": [
+                "Apply Propiconazole (Tilt) or Pyraclostrobin at VT/R1 stage",
+                "Remove infected leaves"
+            ],
+            "prevention": [
+                "Use resistant hybrids with Ht genes",
+                "Crop rotation with non-host crops",
+                "Deep tillage to bury debris"
+            ],
+            "expert_resources": [
+                {
+                    "title": "Northern Corn Leaf Blight — Iowa State",
+                    "url": "https://crops.extension.iastate.edu/cropnews/2012/07/northern-corn-leaf-blight"
+                }
+            ]
+        },
+        {
+            "class_id": "Corn___healthy",
+            "crop": "Corn",
+            "disease": "Healthy",
+            "is_healthy": true,
+            "severity": "None",
+            "symptoms": [
+                "No disease symptoms"
+            ],
+            "causes": [],
+            "treatment": [
+                "No treatment needed"
+            ],
+            "prevention": [
+                "Regular monitoring",
+                "Proper irrigation and fertilization",
+                "Keep fields weed-free"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Grape___Black_rot",
+            "crop": "Grape",
+            "disease": "Black Rot",
+            "is_healthy": false,
+            "severity": "High",
+            "symptoms": [
+                "Circular tan-brown spots with dark borders on leaves",
+                "Black mummified berries remaining on vine",
+                "Reddish-brown lesions on shoots"
+            ],
+            "causes": [
+                "Fungus: Guignardia bidwellii",
+                "Warm wet weather during bloom",
+                "Spores overwinter in mummified berries"
+            ],
+            "treatment": [
+                "Apply Myclobutanil or Mancozeb — begin at budbreak",
+                "Remove all mummified berries and infected leaves",
+                "Prune vines for better air circulation"
+            ],
+            "prevention": [
+                "Remove mummies during dormant pruning",
+                "Apply fungicides on 7-10 day schedule during wet season",
+                "Choose resistant grape varieties"
+            ],
+            "expert_resources": [
+                {
+                    "title": "Black Rot of Grape — Penn State",
+                    "url": "https://extension.psu.edu/black-rot-of-grape"
+                }
+            ]
+        },
+        {
+            "class_id": "Grape___Esca_(Black_Measles)",
+            "crop": "Grape",
+            "disease": "Esca (Black Measles)",
+            "is_healthy": false,
+            "severity": "High",
+            "symptoms": [
+                "Tiger-stripe pattern on leaves — yellow/red between veins",
+                "Dark spots on berries (measles appearance)",
+                "Sudden vine collapse in summer",
+                "Dark streaking in wood when cut"
+            ],
+            "causes": [
+                "Fungal complex: Phaeomoniella chlamydospora + Phaeoacremonium spp.",
+                "Enters through pruning wounds",
+                "Stress conditions accelerate symptoms"
+            ],
+            "treatment": [
+                "No cure — manage to slow progression",
+                "Remove and burn severely infected vines",
+                "Apply wound protectant paste after pruning"
+            ],
+            "prevention": [
+                "Prune during dry weather",
+                "Apply Trichoderma-based biological protectant to pruning wounds",
+                "Delay pruning to later in dormant season"
+            ],
+            "expert_resources": [
+                {
+                    "title": "Esca and Black Measles — UC Davis",
+                    "url": "https://ipm.ucanr.edu/agriculture/grape/esca-black-measles/"
+                }
+            ]
+        },
+        {
+            "class_id": "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+            "crop": "Grape",
+            "disease": "Leaf Blight (Isariopsis Leaf Spot)",
+            "is_healthy": false,
+            "severity": "Medium",
+            "symptoms": [
+                "Angular dark brown spots on upper leaf surface",
+                "Grayish growth on undersides",
+                "Premature defoliation in severe cases"
+            ],
+            "causes": [
+                "Fungus: Pseudocercospora vitis",
+                "Warm humid conditions late in season"
+            ],
+            "treatment": [
+                "Apply copper-based fungicide or Mancozeb",
+                "Remove fallen leaves from around vines"
+            ],
+            "prevention": [
+                "Good canopy management and airflow",
+                "Avoid wetting foliage during irrigation"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Grape___healthy",
+            "crop": "Grape",
+            "disease": "Healthy",
+            "is_healthy": true,
+            "severity": "None",
+            "symptoms": [
+                "No disease symptoms"
+            ],
+            "causes": [],
+            "treatment": [
+                "No treatment needed"
+            ],
+            "prevention": [
+                "Regular monitoring",
+                "Proper canopy management"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Orange___Haunglongbing_(Citrus_greening)",
+            "crop": "Orange",
+            "disease": "Huanglongbing (Citrus Greening)",
+            "is_healthy": false,
+            "severity": "Critical",
+            "symptoms": [
+                "Yellow blotchy mottle on leaves — asymmetric pattern",
+                "Small lopsided bitter fruit",
+                "Premature fruit drop",
+                "Twig dieback",
+                "Corky veins on leaves"
+            ],
+            "causes": [
+                "Bacteria: Candidatus Liberibacter asiaticus",
+                "Spread by Asian citrus psyllid insect",
+                "No cure — tree slowly dies"
+            ],
+            "treatment": [
+                "Remove and destroy infected trees immediately",
+                "Control psyllid with systemic Imidacloprid",
+                "Apply nutritional supplements to extend life of mildly infected trees"
+            ],
+            "prevention": [
+                "Use certified disease-free nursery stock",
+                "Monitor and control Asian citrus psyllid",
+                "Quarantine new plants before introducing to grove"
+            ],
+            "expert_resources": [
+                {
+                    "title": "Citrus Greening — USDA APHIS",
+                    "url": "https://www.aphis.usda.gov/aphis/ourfocus/planthealth/plant-pest-and-disease-programs/pests-and-diseases/citrus/citrus-greening"
+                }
+            ]
+        },
+        {
+            "class_id": "Peach___Bacterial_spot",
+            "crop": "Peach",
+            "disease": "Bacterial Spot",
+            "is_healthy": false,
+            "severity": "High",
+            "symptoms": [
+                "Small water-soaked spots that turn purple-brown",
+                "Spots fall out leaving shot-hole appearance",
+                "Sunken dark spots on fruit surface",
+                "Cankers on twigs"
+            ],
+            "causes": [
+                "Bacteria: Xanthomonas arboricola pv. pruni",
+                "Spread by rain and wind during warm wet weather"
+            ],
+            "treatment": [
+                "Apply copper-based bactericide early in season",
+                "Apply Oxytetracycline during bloom period",
+                "Prune infected twigs during dry weather"
+            ],
+            "prevention": [
+                "Choose resistant peach varieties",
+                "Avoid overhead irrigation",
+                "Apply dormant copper spray before budbreak"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Peach___healthy",
+            "crop": "Peach",
+            "disease": "Healthy",
+            "is_healthy": true,
+            "severity": "None",
+            "symptoms": [
+                "No disease symptoms"
+            ],
+            "causes": [],
+            "treatment": [
+                "No treatment needed"
+            ],
+            "prevention": [
+                "Regular monitoring",
+                "Proper pruning and fertilization"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Pepper,_bell___Bacterial_spot",
+            "crop": "Bell Pepper",
+            "disease": "Bacterial Spot",
+            "is_healthy": false,
+            "severity": "High",
+            "symptoms": [
+                "Small water-soaked spots on leaves and fruit",
+                "Spots turn brown with yellow halos",
+                "Raised scab-like lesions on fruit",
+                "Defoliation in severe cases"
+            ],
+            "causes": [
+                "Bacteria: Xanthomonas campestris pv. vesicatoria",
+                "Warm wet conditions",
+                "Spread through infected seed and transplants"
+            ],
+            "treatment": [
+                "Apply copper fungicide + Mancozeb combination spray",
+                "Remove heavily infected plants"
+            ],
+            "prevention": [
+                "Use certified disease-free seeds",
+                "Avoid working in field when wet",
+                "Crop rotation with non-solanaceous crops"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Pepper,_bell___healthy",
+            "crop": "Bell Pepper",
+            "disease": "Healthy",
+            "is_healthy": true,
+            "severity": "None",
+            "symptoms": [
+                "No disease symptoms"
+            ],
+            "causes": [],
+            "treatment": [
+                "No treatment needed"
+            ],
+            "prevention": [
+                "Regular monitoring",
+                "Adequate spacing for airflow"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Potato___Early_blight",
+            "crop": "Potato",
+            "disease": "Early Blight",
+            "is_healthy": false,
+            "severity": "Medium",
+            "symptoms": [
+                "Dark brown concentric ring spots (target-board pattern) on older leaves",
+                "Yellow halo around spots",
+                "Sunken dark spots on tubers"
+            ],
+            "causes": [
+                "Fungus: Alternaria solani",
+                "Warm 75-85F with alternating wet and dry periods",
+                "Affects stressed or nutrient-deficient plants more severely"
+            ],
+            "treatment": [
+                "Apply Chlorothalonil or Mancozeb at 7-10 day intervals",
+                "Remove infected leaves",
+                "Improve plant nutrition — nitrogen deficiency worsens disease"
+            ],
+            "prevention": [
+                "Use certified disease-free seed potatoes",
+                "Adequate nitrogen fertilization",
+                "Crop rotation with non-solanaceous crops for 3 years"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Potato___Late_blight",
+            "crop": "Potato",
+            "disease": "Late Blight",
+            "is_healthy": false,
+            "severity": "Critical",
+            "symptoms": [
+                "Water-soaked pale green to brown spots on leaves",
+                "White fluffy sporulation on underside in humid conditions",
+                "Rapid browning and death of foliage",
+                "Brown rot on tubers with reddish-brown internal discoloration"
+            ],
+            "causes": [
+                "Oomycete: Phytophthora infestans",
+                "Cool moist weather 50-70F",
+                "Spreads very rapidly — can destroy entire field in days"
+            ],
+            "treatment": [
+                "Apply Metalaxyl + Mancozeb or Cymoxanil IMMEDIATELY",
+                "Remove and destroy infected plants — do not compost",
+                "Do not harvest tubers during wet conditions"
+            ],
+            "prevention": [
+                "Use certified blight-resistant seed potatoes",
+                "Apply preventive fungicide before disease appears in wet seasons",
+                "Hill up soil around plants to protect tubers",
+                "Destroy volunteer potato plants"
+            ],
+            "expert_resources": [
+                {
+                    "title": "Late Blight of Potato — Cornell University",
+                    "url": "https://extension.cornell.edu/resources/late-blight-of-potato-and-tomato/"
+                }
+            ]
+        },
+        {
+            "class_id": "Potato___healthy",
+            "crop": "Potato",
+            "disease": "Healthy",
+            "is_healthy": true,
+            "severity": "None",
+            "symptoms": [
+                "No disease symptoms"
+            ],
+            "causes": [],
+            "treatment": [
+                "No treatment needed"
+            ],
+            "prevention": [
+                "Hilling soil regularly",
+                "Monitor irrigation levels"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Raspberry___healthy",
+            "crop": "Raspberry",
+            "disease": "Healthy",
+            "is_healthy": true,
+            "severity": "None",
+            "symptoms": [
+                "No disease symptoms"
+            ],
+            "causes": [],
+            "treatment": [
+                "No treatment needed"
+            ],
+            "prevention": [
+                "Prune canes annually",
+                "Maintain good air circulation"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Soybean___healthy",
+            "crop": "Soybean",
+            "disease": "Healthy",
+            "is_healthy": true,
+            "severity": "None",
+            "symptoms": [
+                "No disease symptoms"
+            ],
+            "causes": [],
+            "treatment": [
+                "No treatment needed"
+            ],
+            "prevention": [
+                "Regular scouting",
+                "Proper row spacing"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Squash___Powdery_mildew",
+            "crop": "Squash",
+            "disease": "Powdery Mildew",
+            "is_healthy": false,
+            "severity": "Medium",
+            "symptoms": [
+                "White powdery spots on leaves and stems",
+                "Older leaves affected first",
+                "Yellowing and drying of leaves",
+                "Reduced fruit quality and yield"
+            ],
+            "causes": [
+                "Fungus: Podosphaera xanthii and Erysiphe cichoracearum",
+                "Dry weather with high humidity at night",
+                "Does not require wet leaves to spread"
+            ],
+            "treatment": [
+                "Apply potassium bicarbonate or sulfur-based fungicide",
+                "Neem oil spray as organic option",
+                "Remove heavily infected leaves"
+            ],
+            "prevention": [
+                "Plant resistant squash varieties",
+                "Avoid overcrowding plants",
+                "Water at the base — avoid wetting foliage"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Strawberry___Leaf_scorch",
+            "crop": "Strawberry",
+            "disease": "Leaf Scorch",
+            "is_healthy": false,
+            "severity": "Medium",
+            "symptoms": [
+                "Small purple spots on upper leaf surface",
+                "Spots enlarge and centers turn brown",
+                "Entire leaf turns brown and dry (scorch) in severe cases",
+                "Leaf edges curl upward"
+            ],
+            "causes": [
+                "Fungus: Diplocarpon earlianum",
+                "Warm wet weather spreads spores",
+                "Overwinters in infected leaves"
+            ],
+            "treatment": [
+                "Apply Captan or Myclobutanil fungicide",
+                "Remove old infected leaves after harvest"
+            ],
+            "prevention": [
+                "Renovate strawberry beds annually",
+                "Use drip irrigation instead of overhead",
+                "Remove infected plant debris promptly"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Strawberry___healthy",
+            "crop": "Strawberry",
+            "disease": "Healthy",
+            "is_healthy": true,
+            "severity": "None",
+            "symptoms": [
+                "No disease symptoms"
+            ],
+            "causes": [],
+            "treatment": [
+                "No treatment needed"
+            ],
+            "prevention": [
+                "Renovate beds annually",
+                "Monitor for runner overcrowding"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Tomato___Bacterial_spot",
+            "crop": "Tomato",
+            "disease": "Bacterial Spot",
+            "is_healthy": false,
+            "severity": "High",
+            "symptoms": [
+                "Small water-soaked spots turning dark brown with yellow halos",
+                "Raised scab-like lesions on fruit",
+                "Leaf yellowing and defoliation"
+            ],
+            "causes": [
+                "Bacteria: Xanthomonas vesicatoria",
+                "Warm 75-86F with rain and overhead irrigation",
+                "Spreads through contaminated seed"
+            ],
+            "treatment": [
+                "Apply copper bactericide + Mancozeb spray",
+                "Remove infected plant material"
+            ],
+            "prevention": [
+                "Use certified disease-free seeds and transplants",
+                "Drip irrigation only",
+                "Rotate with non-solanaceous crops"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Tomato___Early_blight",
+            "crop": "Tomato",
+            "disease": "Early Blight",
+            "is_healthy": false,
+            "severity": "Medium",
+            "symptoms": [
+                "Concentric ring spots (bulls-eye pattern) on older leaves",
+                "Yellow halo around brown lesions",
+                "Dark cankers at soil level on stems"
+            ],
+            "causes": [
+                "Fungus: Alternaria solani",
+                "Warm moist weather with heavy dew"
+            ],
+            "treatment": [
+                "Apply Chlorothalonil or Mancozeb every 7 days",
+                "Remove affected lower leaves"
+            ],
+            "prevention": [
+                "Mulch around plants to prevent soil splash",
+                "Stake plants to improve air circulation"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Tomato___Late_blight",
+            "crop": "Tomato",
+            "disease": "Late Blight",
+            "is_healthy": false,
+            "severity": "Critical",
+            "symptoms": [
+                "Large irregular water-soaked gray-green patches on leaves",
+                "White mold on underside in humid weather",
+                "Brown greasy spots on fruit",
+                "Rapid plant collapse"
+            ],
+            "causes": [
+                "Oomycete: Phytophthora infestans",
+                "Cool wet weather",
+                "Entire field can be destroyed in 7-10 days"
+            ],
+            "treatment": [
+                "Apply Metalaxyl + Mancozeb IMMEDIATELY upon detection",
+                "Remove and burn all infected plants",
+                "Do not compost infected material"
+            ],
+            "prevention": [
+                "Apply preventive fungicide in high-risk weather",
+                "Avoid overhead irrigation",
+                "Destroy crop debris thoroughly after season"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Tomato___Leaf_Mold",
+            "crop": "Tomato",
+            "disease": "Leaf Mold",
+            "is_healthy": false,
+            "severity": "Medium",
+            "symptoms": [
+                "Pale green or yellow spots on upper leaf surface",
+                "Olive-green to brown velvety mold on underside",
+                "Leaves curl upward and die in severe cases"
+            ],
+            "causes": [
+                "Fungus: Passalora fulva",
+                "High humidity above 85% in greenhouses or dense canopies"
+            ],
+            "treatment": [
+                "Apply Chlorothalonil or copper-based spray",
+                "Improve ventilation and reduce humidity"
+            ],
+            "prevention": [
+                "Use resistant tomato varieties",
+                "Prune plants to open canopy",
+                "Avoid excess nitrogen which promotes dense foliage"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Tomato___Septoria_leaf_spot",
+            "crop": "Tomato",
+            "disease": "Septoria Leaf Spot",
+            "is_healthy": false,
+            "severity": "Medium",
+            "symptoms": [
+                "Small circular spots with white/gray centers and dark borders",
+                "Tiny black pycnidia dots in center of spots",
+                "Starts on lower leaves and moves upward",
+                "Severe defoliation"
+            ],
+            "causes": [
+                "Fungus: Septoria lycopersici",
+                "Warm wet weather",
+                "Overwinters in infected plant debris and weeds"
+            ],
+            "treatment": [
+                "Apply Chlorothalonil or copper-based fungicide",
+                "Remove lower infected leaves"
+            ],
+            "prevention": [
+                "Crop rotation with non-solanaceous plants",
+                "Mulch to prevent soil splash",
+                "Remove crop debris after harvest"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Tomato___Spider_mites Two-spotted_spider_mite",
+            "crop": "Tomato",
+            "disease": "Spider Mites (Two-Spotted)",
+            "is_healthy": false,
+            "severity": "Medium",
+            "symptoms": [
+                "Fine stippling (tiny yellow dots) on upper leaf surface",
+                "Bronze or yellow discoloration",
+                "Fine webbing on leaf undersides",
+                "Tiny moving dots visible under magnification"
+            ],
+            "causes": [
+                "Pest: Tetranychus urticae",
+                "Hot dry conditions favor rapid reproduction",
+                "Dust and drought stress increase susceptibility"
+            ],
+            "treatment": [
+                "Apply Abamectin or Bifenazate miticide",
+                "Neem oil or insecticidal soap as organic option",
+                "Increase humidity — mites dislike moist conditions",
+                "Release predatory mites (Phytoseiulus persimilis) for biocontrol"
+            ],
+            "prevention": [
+                "Maintain adequate irrigation during hot dry weather",
+                "Reduce dust on plants",
+                "Avoid broad-spectrum insecticides that kill natural predators"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Tomato___Target_Spot",
+            "crop": "Tomato",
+            "disease": "Target Spot",
+            "is_healthy": false,
+            "severity": "Medium",
+            "symptoms": [
+                "Small brown spots with concentric rings forming target pattern",
+                "Spots enlarge and merge causing large dead areas",
+                "Dark brown spots with yellow halo on fruit"
+            ],
+            "causes": [
+                "Fungus: Corynespora cassiicola",
+                "Warm humid conditions"
+            ],
+            "treatment": [
+                "Apply Azoxystrobin or Chlorothalonil fungicide",
+                "Improve air circulation by pruning"
+            ],
+            "prevention": [
+                "Stake plants to keep off ground",
+                "Avoid dense planting"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+            "crop": "Tomato",
+            "disease": "Yellow Leaf Curl Virus",
+            "is_healthy": false,
+            "severity": "Critical",
+            "symptoms": [
+                "Upward curling and yellowing of young leaves",
+                "Stunted plant growth",
+                "Reduced fruit set and yield",
+                "Thickened leathery leaf texture"
+            ],
+            "causes": [
+                "Virus: Tomato Yellow Leaf Curl Virus (TYLCV)",
+                "Transmitted by whitefly (Bemisia tabaci)",
+                "No cure — plant must be removed"
+            ],
+            "treatment": [
+                "Remove and destroy infected plants immediately",
+                "Control whitefly with Imidacloprid or Thiamethoxam",
+                "Use yellow sticky traps to monitor whitefly levels"
+            ],
+            "prevention": [
+                "Use TYLCV-resistant tomato varieties",
+                "Cover young plants with insect-proof mesh",
+                "Reflective mulch repels whiteflies"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Tomato___Tomato_mosaic_virus",
+            "crop": "Tomato",
+            "disease": "Mosaic Virus",
+            "is_healthy": false,
+            "severity": "High",
+            "symptoms": [
+                "Light and dark green mottled pattern on leaves",
+                "Leaf distortion and curling",
+                "Stunted growth",
+                "Reduced fruit quality"
+            ],
+            "causes": [
+                "Virus: Tomato mosaic virus (ToMV)",
+                "Spreads through contact — hands tools infected plants",
+                "Seed can carry the virus"
+            ],
+            "treatment": [
+                "No cure — remove infected plants",
+                "Disinfect tools with 10% bleach solution between plants",
+                "Wash hands thoroughly before handling plants"
+            ],
+            "prevention": [
+                "Use virus-free certified seeds",
+                "Sanitize tools and equipment regularly",
+                "Control aphid populations"
+            ],
+            "expert_resources": []
+        },
+        {
+            "class_id": "Tomato___healthy",
+            "crop": "Tomato",
+            "disease": "Healthy",
+            "is_healthy": true,
+            "severity": "None",
+            "symptoms": [
+                "No disease symptoms"
+            ],
+            "causes": [],
+            "treatment": [
+                "No treatment needed"
+            ],
+            "prevention": [
+                "Regular monitoring twice per week",
+                "Proper staking and pruning",
+                "Balanced fertilization"
+            ],
+            "expert_resources": []
+        }
+    ]
+}

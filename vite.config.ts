@@ -6,12 +6,16 @@ export default defineConfig({
   server: {
     port: 3000,
     host: '0.0.0.0',
-    allowedHosts: ['monogenistic-leroy-interaural.ngrok-free.dev'],
+    allowedHosts: ['monogenistic-leroy-interaural.ngrok-free.dev', 'monogenistic-leroy-interaural.ngrok-free.app'],
     proxy: {
       '/api': {
         target: 'http://localhost:8000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+      '/uploads': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
       },
     },
   },
