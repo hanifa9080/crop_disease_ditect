@@ -60,14 +60,15 @@ def save_scan(user_id: str, image_base64: str | None, results: list) -> dict:
             cur.execute(
                 """
                 INSERT INTO scan_results
-                    (id, scan_id, plant_name, confidence, is_plant, diagnosis,
+                    (id, scan_id, plant_name, disease_name, confidence, is_plant, diagnosis,
                      alternatives, issues, treatment_plan, prevention_tips, expert_resources)
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
                 """,
                 (
                     str(uuid.uuid4()),
                     scan_id,
                     r.get("plantName", "Unknown"),
+                    r.get("diseaseName", ""),
                     r.get("confidence", 0),
                     r.get("isPlant", True),
                     r.get("diagnosis", ""),
@@ -119,6 +120,7 @@ def get_history(user_id: str) -> list:
             for r in cur.fetchall():
                 results.append({
                     "plantName":       r["plant_name"],
+                    "diseaseName":     r.get("disease_name") or "",
                     "confidence":      r["confidence"],
                     "isPlant":         bool(r["is_plant"]),
                     "diagnosis":       r["diagnosis"],

@@ -28,6 +28,7 @@ dist-ssr
 *.md
 *.png
 *.jpg
+!public/assets/**/*
 
 
 # MySQL credentials — never commit

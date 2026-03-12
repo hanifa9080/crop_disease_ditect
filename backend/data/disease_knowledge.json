@@ -1,828 +1,1795 @@
 {
-    "version": "1.0",
-    "supported_classes": 27,
-    "diseases": [
-        {
-            "class_id": "Corn___Cercospora_leaf_spot Gray_leaf_spot",
-            "crop": "Corn",
-            "disease": "Cercospora Leaf Spot (Gray Leaf Spot)",
-            "is_healthy": false,
-            "severity": "High",
-            "symptoms": [
-                "Rectangular gray-tan lesions parallel to leaf veins",
-                "Tan/gray center with dark brown borders",
-                "Entire leaf death in severe cases"
-            ],
-            "causes": [
-                "Fungus: Cercospora zeae-maydis",
-                "Warm humid cloudy weather",
-                "Infected crop residue"
-            ],
-            "treatment": [
-                "Apply Propiconazole or Azoxystrobin fungicide at first sign",
-                "Remove and destroy infected debris",
-                "Improve air circulation"
-            ],
-            "prevention": [
-                "Use resistant corn hybrids",
-                "Crop rotation — no corn same field 2 years",
-                "Avoid overhead irrigation",
-                "Till soil after harvest"
-            ],
-            "expert_resources": [
-                {
-                    "title": "Gray Leaf Spot — UMN Extension",
-                    "url": "https://extension.umn.edu/corn-pest-management/gray-leaf-spot"
-                }
-            ]
+  "diseases": [
+    {
+      "class_id": "Corn___Cercospora_leaf_spot Gray_leaf_spot",
+      "crop": "Corn",
+      "disease": "Cercospora Leaf Spot (Gray Leaf Spot)",
+      "is_healthy": false,
+      "severity": "High",
+      "symptoms": [
+        "Rectangular gray-tan lesions parallel to leaf veins",
+        "Tan/gray center with dark brown borders",
+        "Entire leaf death in severe cases"
+      ],
+      "causes": [
+        "Fungus: Cercospora zeae-maydis",
+        "Warm humid cloudy weather",
+        "Infected crop residue"
+      ],
+      "doctor_diagnosis": "Cercospora Leaf Spot (Gray Leaf Spot) is a fungal disease of corn that causes rectangular gray-tan lesions parallel to the leaf veins. Severe infections can significantly reduce yield and plant vigor.",
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Cercospora Leaf Spot (Gray Leaf Spot) is present on this plant. It is caused by the fungus Cercospora zeae-maydis. The leaves show rectangular gray-tan lesions parallel to leaf veins and tan/gray centers with dark brown borders. Under favorable conditions, lesions may expand or merge, leading to significant damage to foliage. Severe infections can significantly reduce crop yields."
         },
-        {
-            "class_id": "Corn___Common_rust",
-            "crop": "Corn",
-            "disease": "Common Rust",
-            "is_healthy": false,
-            "severity": "Medium",
-            "symptoms": [
-                "Small circular to elongated brown pustules on both leaf surfaces",
-                "Pustules turn black as season progresses",
-                "Leaves yellow and die in severe infection"
-            ],
-            "causes": [
-                "Fungus: Puccinia sorghi",
-                "Wind-blown spores",
-                "Cool temperatures 60-77F with high humidity"
-            ],
-            "treatment": [
-                "Apply Mancozeb or Trifloxystrobin fungicide",
-                "Scout fields regularly — treat early"
-            ],
-            "prevention": [
-                "Plant rust-resistant corn varieties",
-                "Early planting avoids peak rust season",
-                "Monitor weather for high-risk periods"
-            ],
-            "expert_resources": [
-                {
-                    "title": "Common Rust — Purdue Extension",
-                    "url": "https://www.extension.purdue.edu/extmedia/BP/BP-77-W.pdf"
-                }
-            ]
+        "pests": {
+          "detected": false,
+          "details": "Pests are not causing Cercospora Leaf Spot (Gray Leaf Spot). However, insect feeding wounds can create entry points that allow pathogens to infect the plant."
         },
-        {
-            "class_id": "Corn___Northern_Leaf_Blight",
-            "crop": "Corn",
-            "disease": "Northern Leaf Blight",
-            "is_healthy": false,
-            "severity": "High",
-            "symptoms": [
-                "Long cigar-shaped gray-green lesions 1-6 inches",
-                "Tan to gray color with wavy edges",
-                "Dark green water-soaked borders initially"
-            ],
-            "causes": [
-                "Fungus: Exserohilum turcicum",
-                "Cool 65-80F with high humidity",
-                "Overwinters in infected corn debris"
-            ],
-            "treatment": [
-                "Apply Propiconazole (Tilt) or Pyraclostrobin at VT/R1 stage",
-                "Remove infected leaves"
-            ],
-            "prevention": [
-                "Use resistant hybrids with Ht genes",
-                "Crop rotation with non-host crops",
-                "Deep tillage to bury debris"
-            ],
-            "expert_resources": [
-                {
-                    "title": "Northern Corn Leaf Blight — Iowa State",
-                    "url": "https://crops.extension.iastate.edu/cropnews/2012/07/northern-corn-leaf-blight"
-                }
-            ]
+        "overwatering": {
+          "detected": true,
+          "details": "Overwatering can contribute to the spread of Cercospora Leaf Spot (Gray Leaf Spot). Excess moisture on leaves creates a favorable environment for the fungus. Overhead irrigation splashes pathogens between plants, increasing disease spread. Watering at the base of the plant or using drip irrigation helps control the disease."
         },
-        {
-            "class_id": "Corn___healthy",
-            "crop": "Corn",
-            "disease": "Healthy",
-            "is_healthy": true,
-            "severity": "None",
-            "symptoms": [
-                "No disease symptoms"
-            ],
-            "causes": [],
-            "treatment": [
-                "No treatment needed"
-            ],
-            "prevention": [
-                "Regular monitoring",
-                "Proper irrigation and fertilization",
-                "Keep fields weed-free"
-            ],
-            "expert_resources": []
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause Cercospora Leaf Spot (Gray Leaf Spot). This disease typically requires warm, moist conditions to spread, so dry conditions do not favor it."
         },
-        {
-            "class_id": "Grape___Black_rot",
-            "crop": "Grape",
-            "disease": "Black Rot",
-            "is_healthy": false,
-            "severity": "High",
-            "symptoms": [
-                "Circular tan-brown spots with dark borders on leaves",
-                "Black mummified berries remaining on vine",
-                "Reddish-brown lesions on shoots"
-            ],
-            "causes": [
-                "Fungus: Guignardia bidwellii",
-                "Warm wet weather during bloom",
-                "Spores overwinter in mummified berries"
-            ],
-            "treatment": [
-                "Apply Myclobutanil or Mancozeb — begin at budbreak",
-                "Remove all mummified berries and infected leaves",
-                "Prune vines for better air circulation"
-            ],
-            "prevention": [
-                "Remove mummies during dormant pruning",
-                "Apply fungicides on 7-10 day schedule during wet season",
-                "Choose resistant grape varieties"
-            ],
-            "expert_resources": [
-                {
-                    "title": "Black Rot of Grape — Penn State",
-                    "url": "https://extension.psu.edu/black-rot-of-grape"
-                }
-            ]
+        "soil": {
+          "detected": true,
+          "details": "Soil conditions can contribute to Cercospora Leaf Spot (Gray Leaf Spot). Poor drainage or infected crop residue in the soil can harbor the fungus and lead to infection. Improving field drainage and removing infected debris can help reduce disease risk."
         },
-        {
-            "class_id": "Grape___Esca_(Black_Measles)",
-            "crop": "Grape",
-            "disease": "Esca (Black Measles)",
-            "is_healthy": false,
-            "severity": "High",
-            "symptoms": [
-                "Tiger-stripe pattern on leaves — yellow/red between veins",
-                "Dark spots on berries (measles appearance)",
-                "Sudden vine collapse in summer",
-                "Dark streaking in wood when cut"
-            ],
-            "causes": [
-                "Fungal complex: Phaeomoniella chlamydospora + Phaeoacremonium spp.",
-                "Enters through pruning wounds",
-                "Stress conditions accelerate symptoms"
-            ],
-            "treatment": [
-                "No cure — manage to slow progression",
-                "Remove and burn severely infected vines",
-                "Apply wound protectant paste after pruning"
-            ],
-            "prevention": [
-                "Prune during dry weather",
-                "Apply Trichoderma-based biological protectant to pruning wounds",
-                "Delay pruning to later in dormant season"
-            ],
-            "expert_resources": [
-                {
-                    "title": "Esca and Black Measles — UC Davis",
-                    "url": "https://ipm.ucanr.edu/agriculture/grape/esca-black-measles/"
-                }
-            ]
+        "sunlight": {
+          "detected": true,
+          "details": "Sunlight levels can influence Cercospora Leaf Spot (Gray Leaf Spot). Dense or shaded canopies increase humidity, which favors fungal growth. Adequate sunlight and proper plant spacing improve airflow and help reduce disease risk."
         },
-        {
-            "class_id": "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
-            "crop": "Grape",
-            "disease": "Leaf Blight (Isariopsis Leaf Spot)",
-            "is_healthy": false,
-            "severity": "Medium",
-            "symptoms": [
-                "Angular dark brown spots on upper leaf surface",
-                "Grayish growth on undersides",
-                "Premature defoliation in severe cases"
-            ],
-            "causes": [
-                "Fungus: Pseudocercospora vitis",
-                "Warm humid conditions late in season"
-            ],
-            "treatment": [
-                "Apply copper-based fungicide or Mancozeb",
-                "Remove fallen leaves from around vines"
-            ],
-            "prevention": [
-                "Good canopy management and airflow",
-                "Avoid wetting foliage during irrigation"
-            ],
-            "expert_resources": []
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Cercospora Leaf Spot (Gray Leaf Spot). However, balanced fertilization helps maintain plant vigor and resistance. Healthy, well-nourished plants can better tolerate disease pressure."
         },
-        {
-            "class_id": "Grape___healthy",
-            "crop": "Grape",
-            "disease": "Healthy",
-            "is_healthy": true,
-            "severity": "None",
-            "symptoms": [
-                "No disease symptoms"
-            ],
-            "causes": [],
-            "treatment": [
-                "No treatment needed"
-            ],
-            "prevention": [
-                "Regular monitoring",
-                "Proper canopy management"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Orange___Haunglongbing_(Citrus_greening)",
-            "crop": "Orange",
-            "disease": "Huanglongbing (Citrus Greening)",
-            "is_healthy": false,
-            "severity": "Critical",
-            "symptoms": [
-                "Yellow blotchy mottle on leaves — asymmetric pattern",
-                "Small lopsided bitter fruit",
-                "Premature fruit drop",
-                "Twig dieback",
-                "Corky veins on leaves"
-            ],
-            "causes": [
-                "Bacteria: Candidatus Liberibacter asiaticus",
-                "Spread by Asian citrus psyllid insect",
-                "No cure — tree slowly dies"
-            ],
-            "treatment": [
-                "Remove and destroy infected trees immediately",
-                "Control psyllid with systemic Imidacloprid",
-                "Apply nutritional supplements to extend life of mildly infected trees"
-            ],
-            "prevention": [
-                "Use certified disease-free nursery stock",
-                "Monitor and control Asian citrus psyllid",
-                "Quarantine new plants before introducing to grove"
-            ],
-            "expert_resources": [
-                {
-                    "title": "Citrus Greening — USDA APHIS",
-                    "url": "https://www.aphis.usda.gov/aphis/ourfocus/planthealth/plant-pest-and-disease-programs/pests-and-diseases/citrus/citrus-greening"
-                }
-            ]
-        },
-        {
-            "class_id": "Peach___Bacterial_spot",
-            "crop": "Peach",
-            "disease": "Bacterial Spot",
-            "is_healthy": false,
-            "severity": "High",
-            "symptoms": [
-                "Small water-soaked spots that turn purple-brown",
-                "Spots fall out leaving shot-hole appearance",
-                "Sunken dark spots on fruit surface",
-                "Cankers on twigs"
-            ],
-            "causes": [
-                "Bacteria: Xanthomonas arboricola pv. pruni",
-                "Spread by rain and wind during warm wet weather"
-            ],
-            "treatment": [
-                "Apply copper-based bactericide early in season",
-                "Apply Oxytetracycline during bloom period",
-                "Prune infected twigs during dry weather"
-            ],
-            "prevention": [
-                "Choose resistant peach varieties",
-                "Avoid overhead irrigation",
-                "Apply dormant copper spray before budbreak"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Peach___healthy",
-            "crop": "Peach",
-            "disease": "Healthy",
-            "is_healthy": true,
-            "severity": "None",
-            "symptoms": [
-                "No disease symptoms"
-            ],
-            "causes": [],
-            "treatment": [
-                "No treatment needed"
-            ],
-            "prevention": [
-                "Regular monitoring",
-                "Proper pruning and fertilization"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Pepper,_bell___Bacterial_spot",
-            "crop": "Bell Pepper",
-            "disease": "Bacterial Spot",
-            "is_healthy": false,
-            "severity": "High",
-            "symptoms": [
-                "Small water-soaked spots on leaves and fruit",
-                "Spots turn brown with yellow halos",
-                "Raised scab-like lesions on fruit",
-                "Defoliation in severe cases"
-            ],
-            "causes": [
-                "Bacteria: Xanthomonas campestris pv. vesicatoria",
-                "Warm wet conditions",
-                "Spread through infected seed and transplants"
-            ],
-            "treatment": [
-                "Apply copper fungicide + Mancozeb combination spray",
-                "Remove heavily infected plants"
-            ],
-            "prevention": [
-                "Use certified disease-free seeds",
-                "Avoid working in field when wet",
-                "Crop rotation with non-solanaceous crops"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Pepper,_bell___healthy",
-            "crop": "Bell Pepper",
-            "disease": "Healthy",
-            "is_healthy": true,
-            "severity": "None",
-            "symptoms": [
-                "No disease symptoms"
-            ],
-            "causes": [],
-            "treatment": [
-                "No treatment needed"
-            ],
-            "prevention": [
-                "Regular monitoring",
-                "Adequate spacing for airflow"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Potato___Early_blight",
-            "crop": "Potato",
-            "disease": "Early Blight",
-            "is_healthy": false,
-            "severity": "Medium",
-            "symptoms": [
-                "Dark brown concentric ring spots (target-board pattern) on older leaves",
-                "Yellow halo around spots",
-                "Sunken dark spots on tubers"
-            ],
-            "causes": [
-                "Fungus: Alternaria solani",
-                "Warm 75-85F with alternating wet and dry periods",
-                "Affects stressed or nutrient-deficient plants more severely"
-            ],
-            "treatment": [
-                "Apply Chlorothalonil or Mancozeb at 7-10 day intervals",
-                "Remove infected leaves",
-                "Improve plant nutrition — nitrogen deficiency worsens disease"
-            ],
-            "prevention": [
-                "Use certified disease-free seed potatoes",
-                "Adequate nitrogen fertilization",
-                "Crop rotation with non-solanaceous crops for 3 years"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Potato___Late_blight",
-            "crop": "Potato",
-            "disease": "Late Blight",
-            "is_healthy": false,
-            "severity": "Critical",
-            "symptoms": [
-                "Water-soaked pale green to brown spots on leaves",
-                "White fluffy sporulation on underside in humid conditions",
-                "Rapid browning and death of foliage",
-                "Brown rot on tubers with reddish-brown internal discoloration"
-            ],
-            "causes": [
-                "Oomycete: Phytophthora infestans",
-                "Cool moist weather 50-70F",
-                "Spreads very rapidly — can destroy entire field in days"
-            ],
-            "treatment": [
-                "Apply Metalaxyl + Mancozeb or Cymoxanil IMMEDIATELY",
-                "Remove and destroy infected plants — do not compost",
-                "Do not harvest tubers during wet conditions"
-            ],
-            "prevention": [
-                "Use certified blight-resistant seed potatoes",
-                "Apply preventive fungicide before disease appears in wet seasons",
-                "Hill up soil around plants to protect tubers",
-                "Destroy volunteer potato plants"
-            ],
-            "expert_resources": [
-                {
-                    "title": "Late Blight of Potato — Cornell University",
-                    "url": "https://extension.cornell.edu/resources/late-blight-of-potato-and-tomato/"
-                }
-            ]
-        },
-        {
-            "class_id": "Potato___healthy",
-            "crop": "Potato",
-            "disease": "Healthy",
-            "is_healthy": true,
-            "severity": "None",
-            "symptoms": [
-                "No disease symptoms"
-            ],
-            "causes": [],
-            "treatment": [
-                "No treatment needed"
-            ],
-            "prevention": [
-                "Hilling soil regularly",
-                "Monitor irrigation levels"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Raspberry___healthy",
-            "crop": "Raspberry",
-            "disease": "Healthy",
-            "is_healthy": true,
-            "severity": "None",
-            "symptoms": [
-                "No disease symptoms"
-            ],
-            "causes": [],
-            "treatment": [
-                "No treatment needed"
-            ],
-            "prevention": [
-                "Prune canes annually",
-                "Maintain good air circulation"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Soybean___healthy",
-            "crop": "Soybean",
-            "disease": "Healthy",
-            "is_healthy": true,
-            "severity": "None",
-            "symptoms": [
-                "No disease symptoms"
-            ],
-            "causes": [],
-            "treatment": [
-                "No treatment needed"
-            ],
-            "prevention": [
-                "Regular scouting",
-                "Proper row spacing"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Squash___Powdery_mildew",
-            "crop": "Squash",
-            "disease": "Powdery Mildew",
-            "is_healthy": false,
-            "severity": "Medium",
-            "symptoms": [
-                "White powdery spots on leaves and stems",
-                "Older leaves affected first",
-                "Yellowing and drying of leaves",
-                "Reduced fruit quality and yield"
-            ],
-            "causes": [
-                "Fungus: Podosphaera xanthii and Erysiphe cichoracearum",
-                "Dry weather with high humidity at night",
-                "Does not require wet leaves to spread"
-            ],
-            "treatment": [
-                "Apply potassium bicarbonate or sulfur-based fungicide",
-                "Neem oil spray as organic option",
-                "Remove heavily infected leaves"
-            ],
-            "prevention": [
-                "Plant resistant squash varieties",
-                "Avoid overcrowding plants",
-                "Water at the base — avoid wetting foliage"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Strawberry___Leaf_scorch",
-            "crop": "Strawberry",
-            "disease": "Leaf Scorch",
-            "is_healthy": false,
-            "severity": "Medium",
-            "symptoms": [
-                "Small purple spots on upper leaf surface",
-                "Spots enlarge and centers turn brown",
-                "Entire leaf turns brown and dry (scorch) in severe cases",
-                "Leaf edges curl upward"
-            ],
-            "causes": [
-                "Fungus: Diplocarpon earlianum",
-                "Warm wet weather spreads spores",
-                "Overwinters in infected leaves"
-            ],
-            "treatment": [
-                "Apply Captan or Myclobutanil fungicide",
-                "Remove old infected leaves after harvest"
-            ],
-            "prevention": [
-                "Renovate strawberry beds annually",
-                "Use drip irrigation instead of overhead",
-                "Remove infected plant debris promptly"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Strawberry___healthy",
-            "crop": "Strawberry",
-            "disease": "Healthy",
-            "is_healthy": true,
-            "severity": "None",
-            "symptoms": [
-                "No disease symptoms"
-            ],
-            "causes": [],
-            "treatment": [
-                "No treatment needed"
-            ],
-            "prevention": [
-                "Renovate beds annually",
-                "Monitor for runner overcrowding"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Tomato___Bacterial_spot",
-            "crop": "Tomato",
-            "disease": "Bacterial Spot",
-            "is_healthy": false,
-            "severity": "High",
-            "symptoms": [
-                "Small water-soaked spots turning dark brown with yellow halos",
-                "Raised scab-like lesions on fruit",
-                "Leaf yellowing and defoliation"
-            ],
-            "causes": [
-                "Bacteria: Xanthomonas vesicatoria",
-                "Warm 75-86F with rain and overhead irrigation",
-                "Spreads through contaminated seed"
-            ],
-            "treatment": [
-                "Apply copper bactericide + Mancozeb spray",
-                "Remove infected plant material"
-            ],
-            "prevention": [
-                "Use certified disease-free seeds and transplants",
-                "Drip irrigation only",
-                "Rotate with non-solanaceous crops"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Tomato___Early_blight",
-            "crop": "Tomato",
-            "disease": "Early Blight",
-            "is_healthy": false,
-            "severity": "Medium",
-            "symptoms": [
-                "Concentric ring spots (bulls-eye pattern) on older leaves",
-                "Yellow halo around brown lesions",
-                "Dark cankers at soil level on stems"
-            ],
-            "causes": [
-                "Fungus: Alternaria solani",
-                "Warm moist weather with heavy dew"
-            ],
-            "treatment": [
-                "Apply Chlorothalonil or Mancozeb every 7 days",
-                "Remove affected lower leaves"
-            ],
-            "prevention": [
-                "Mulch around plants to prevent soil splash",
-                "Stake plants to improve air circulation"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Tomato___Late_blight",
-            "crop": "Tomato",
-            "disease": "Late Blight",
-            "is_healthy": false,
-            "severity": "Critical",
-            "symptoms": [
-                "Large irregular water-soaked gray-green patches on leaves",
-                "White mold on underside in humid weather",
-                "Brown greasy spots on fruit",
-                "Rapid plant collapse"
-            ],
-            "causes": [
-                "Oomycete: Phytophthora infestans",
-                "Cool wet weather",
-                "Entire field can be destroyed in 7-10 days"
-            ],
-            "treatment": [
-                "Apply Metalaxyl + Mancozeb IMMEDIATELY upon detection",
-                "Remove and burn all infected plants",
-                "Do not compost infected material"
-            ],
-            "prevention": [
-                "Apply preventive fungicide in high-risk weather",
-                "Avoid overhead irrigation",
-                "Destroy crop debris thoroughly after season"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Tomato___Leaf_Mold",
-            "crop": "Tomato",
-            "disease": "Leaf Mold",
-            "is_healthy": false,
-            "severity": "Medium",
-            "symptoms": [
-                "Pale green or yellow spots on upper leaf surface",
-                "Olive-green to brown velvety mold on underside",
-                "Leaves curl upward and die in severe cases"
-            ],
-            "causes": [
-                "Fungus: Passalora fulva",
-                "High humidity above 85% in greenhouses or dense canopies"
-            ],
-            "treatment": [
-                "Apply Chlorothalonil or copper-based spray",
-                "Improve ventilation and reduce humidity"
-            ],
-            "prevention": [
-                "Use resistant tomato varieties",
-                "Prune plants to open canopy",
-                "Avoid excess nitrogen which promotes dense foliage"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Tomato___Septoria_leaf_spot",
-            "crop": "Tomato",
-            "disease": "Septoria Leaf Spot",
-            "is_healthy": false,
-            "severity": "Medium",
-            "symptoms": [
-                "Small circular spots with white/gray centers and dark borders",
-                "Tiny black pycnidia dots in center of spots",
-                "Starts on lower leaves and moves upward",
-                "Severe defoliation"
-            ],
-            "causes": [
-                "Fungus: Septoria lycopersici",
-                "Warm wet weather",
-                "Overwinters in infected plant debris and weeds"
-            ],
-            "treatment": [
-                "Apply Chlorothalonil or copper-based fungicide",
-                "Remove lower infected leaves"
-            ],
-            "prevention": [
-                "Crop rotation with non-solanaceous plants",
-                "Mulch to prevent soil splash",
-                "Remove crop debris after harvest"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Tomato___Spider_mites Two-spotted_spider_mite",
-            "crop": "Tomato",
-            "disease": "Spider Mites (Two-Spotted)",
-            "is_healthy": false,
-            "severity": "Medium",
-            "symptoms": [
-                "Fine stippling (tiny yellow dots) on upper leaf surface",
-                "Bronze or yellow discoloration",
-                "Fine webbing on leaf undersides",
-                "Tiny moving dots visible under magnification"
-            ],
-            "causes": [
-                "Pest: Tetranychus urticae",
-                "Hot dry conditions favor rapid reproduction",
-                "Dust and drought stress increase susceptibility"
-            ],
-            "treatment": [
-                "Apply Abamectin or Bifenazate miticide",
-                "Neem oil or insecticidal soap as organic option",
-                "Increase humidity — mites dislike moist conditions",
-                "Release predatory mites (Phytoseiulus persimilis) for biocontrol"
-            ],
-            "prevention": [
-                "Maintain adequate irrigation during hot dry weather",
-                "Reduce dust on plants",
-                "Avoid broad-spectrum insecticides that kill natural predators"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Tomato___Target_Spot",
-            "crop": "Tomato",
-            "disease": "Target Spot",
-            "is_healthy": false,
-            "severity": "Medium",
-            "symptoms": [
-                "Small brown spots with concentric rings forming target pattern",
-                "Spots enlarge and merge causing large dead areas",
-                "Dark brown spots with yellow halo on fruit"
-            ],
-            "causes": [
-                "Fungus: Corynespora cassiicola",
-                "Warm humid conditions"
-            ],
-            "treatment": [
-                "Apply Azoxystrobin or Chlorothalonil fungicide",
-                "Improve air circulation by pruning"
-            ],
-            "prevention": [
-                "Stake plants to keep off ground",
-                "Avoid dense planting"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
-            "crop": "Tomato",
-            "disease": "Yellow Leaf Curl Virus",
-            "is_healthy": false,
-            "severity": "Critical",
-            "symptoms": [
-                "Upward curling and yellowing of young leaves",
-                "Stunted plant growth",
-                "Reduced fruit set and yield",
-                "Thickened leathery leaf texture"
-            ],
-            "causes": [
-                "Virus: Tomato Yellow Leaf Curl Virus (TYLCV)",
-                "Transmitted by whitefly (Bemisia tabaci)",
-                "No cure — plant must be removed"
-            ],
-            "treatment": [
-                "Remove and destroy infected plants immediately",
-                "Control whitefly with Imidacloprid or Thiamethoxam",
-                "Use yellow sticky traps to monitor whitefly levels"
-            ],
-            "prevention": [
-                "Use TYLCV-resistant tomato varieties",
-                "Cover young plants with insect-proof mesh",
-                "Reflective mulch repels whiteflies"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Tomato___Tomato_mosaic_virus",
-            "crop": "Tomato",
-            "disease": "Mosaic Virus",
-            "is_healthy": false,
-            "severity": "High",
-            "symptoms": [
-                "Light and dark green mottled pattern on leaves",
-                "Leaf distortion and curling",
-                "Stunted growth",
-                "Reduced fruit quality"
-            ],
-            "causes": [
-                "Virus: Tomato mosaic virus (ToMV)",
-                "Spreads through contact — hands tools infected plants",
-                "Seed can carry the virus"
-            ],
-            "treatment": [
-                "No cure — remove infected plants",
-                "Disinfect tools with 10% bleach solution between plants",
-                "Wash hands thoroughly before handling plants"
-            ],
-            "prevention": [
-                "Use virus-free certified seeds",
-                "Sanitize tools and equipment regularly",
-                "Control aphid populations"
-            ],
-            "expert_resources": []
-        },
-        {
-            "class_id": "Tomato___healthy",
-            "crop": "Tomato",
-            "disease": "Healthy",
-            "is_healthy": true,
-            "severity": "None",
-            "symptoms": [
-                "No disease symptoms"
-            ],
-            "causes": [],
-            "treatment": [
-                "No treatment needed"
-            ],
-            "prevention": [
-                "Regular monitoring twice per week",
-                "Proper staking and pruning",
-                "Balanced fertilization"
-            ],
-            "expert_resources": []
+        "generalStress": {
+          "detected": true,
+          "details": "Cercospora Leaf Spot (Gray Leaf Spot) can place significant stress on the plant. It can reduce leaf area and photosynthesis. If not managed promptly, severe infections may lead to reduced yield and plant vigor."
         }
-    ]
+      },
+      "treatment": [
+        "Fungicide application (e.g., azoxystrobin, tebuconazole) at first symptoms",
+        "Resistant hybrids (e.g., varieties with GLT resistance)",
+        "Remove and destroy infected plant debris"
+      ],
+      "prevention": [
+        "Rotate with non-host crops (e.g., soybeans)",
+        "Deep plowing to bury residue",
+        "Use disease-free seed"
+      ],
+      "expert_resources": [
+        {
+          "title": "Gray leaf spot of corn (UC IPM)",
+          "url": "http://ipm.ucanr.edu/PMG/r643300111.html"
+        }
+      ]
+    },
+    {
+      "class_id": "Corn___Common_rust",
+      "crop": "Corn",
+      "disease": "Common Rust",
+      "is_healthy": false,
+      "severity": "High",
+      "symptoms": [
+        "Small round to elongated brown pustules on both leaf surfaces",
+        "Pustules erupt through epidermis",
+        "In severe cases, leaves appear rusty and necrotic"
+      ],
+      "causes": [
+        "Fungus: Puccinia sorghi",
+        "Wind-blown spores",
+        "Cool temperatures (60-77\u00b0F) with high humidity"
+      ],
+      "doctor_diagnosis": "Common Rust is a fungal disease of corn that causes small, reddish-brown pustules on leaves. Severe rust can significantly reduce photosynthesis and yield under favorable conditions.",
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Common Rust is present on this plant. It is caused by the fungus Puccinia sorghi. The leaves show small round to elongated reddish-brown pustules on both surfaces. Under humid conditions, pustules may break open and spread spores to other leaves. Severe infections can reduce photosynthesis and lower yield."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests are not causing Common Rust. However, insect feeding wounds can create entry points that allow pathogens to infect the plant."
+        },
+        "overwatering": {
+          "detected": true,
+          "details": "Overwatering can contribute to the spread of Common Rust. Excess leaf wetness and dew favor spore germination. Overhead irrigation can splash spores onto new leaves. Watering at the base or using drip irrigation can help reduce leaf wetness and disease spread."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause Common Rust. Rust diseases develop in cool, moist environments; dry conditions do not favor rust development."
+        },
+        "soil": {
+          "detected": false,
+          "details": "Soil conditions do not cause Common Rust. The pathogen spreads by windborne spores between corn plants, not through the soil."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not directly cause Common Rust. However, adequate sunlight and good air circulation can help foliage dry faster and reduce rust development."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Common Rust. However, well-nourished plants are generally more vigorous and better able to resist disease."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "Common Rust can put stress on the plant by reducing its photosynthetic area. Heavy rust infection can lead to premature leaf death. If the disease spreads unchecked, yield losses may result."
+        }
+      },
+      "treatment": [
+        "Fungicide application (e.g., chlorothalonil) if early and severe",
+        "Use resistant hybrids (e.g., with puccinia rust resistance)",
+        "Remove volunteer corn and weeds that can harbor rust"
+      ],
+      "prevention": [
+        "Rotate with non-host crops",
+        "Avoid planting in cool, wet conditions if possible"
+      ],
+      "expert_resources": [
+        {
+          "title": "Common Rust of Corn (Kansas State Univ)",
+          "url": "https://entomology.k-state.edu/extension/insect-identification/corn-pests/common-rust.html"
+        }
+      ]
+    },
+    {
+      "class_id": "Corn___Northern_Leaf_Blight",
+      "crop": "Corn",
+      "disease": "Northern Leaf Blight",
+      "is_healthy": false,
+      "severity": "High",
+      "symptoms": [
+        "Long elliptical tan lesions parallel to leaf veins",
+        "Lesions initially narrow, then expand and overlap",
+        "Severe defoliation in susceptible hybrids"
+      ],
+      "causes": [
+        "Fungus: Exserohilum turcicum",
+        "Cool to moderate temperatures (68-80\u00b0F) with high humidity",
+        "Overwinters in infected corn debris"
+      ],
+      "doctor_diagnosis": "Northern Leaf Blight is a fungal disease of corn that causes long tan lesions on leaves. Severe infections can cause large areas of leaf blight and reduce yield.",
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Northern Leaf Blight is present on this plant. It is caused by the fungus Exserohilum turcicum. The leaves show long elliptical tan lesions parallel to the veins. Lesions can expand and merge, causing large dead areas on leaves. Severe infections may lead to premature leaf death and significant yield losses."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests are not causing Northern Leaf Blight. However, insect feeding wounds can create entry points that allow pathogens to infect the plant."
+        },
+        "overwatering": {
+          "detected": true,
+          "details": "Overwatering can contribute to the spread of Northern Leaf Blight. Excess leaf wetness and humidity favor the fungus. Overhead irrigation can splash spores onto healthy leaves. Watering at the base or using drip irrigation helps keep foliage dry and reduces disease spread."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause Northern Leaf Blight. This disease requires moisture to infect; dry conditions do not promote it."
+        },
+        "soil": {
+          "detected": true,
+          "details": "Soil conditions can contribute to Northern Leaf Blight. The fungus overwinters in infected corn residue in the field. Good crop rotation and tillage to bury residues can help reduce the inoculum in soil."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not directly cause Northern Leaf Blight. However, adequate sunlight and plant spacing improve airflow and can help foliage dry faster, reducing disease risk."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Northern Leaf Blight. However, balanced fertilization supports plant health and may help plants better tolerate infection."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "Northern Leaf Blight can place stress on the plant by reducing leaf area for photosynthesis. Severe infections may cause defoliation, weakening the plant. If not managed, significant yield loss can occur."
+        }
+      },
+      "treatment": [
+        "Fungicide application (e.g., propiconazole) at early tassel stage",
+        "Plant resistant hybrids when available",
+        "Use tillage or crop rotation to reduce residue"
+      ],
+      "prevention": [
+        "Rotate with non-host crops (e.g., soybean)",
+        "Delay planting in areas with history of blight"
+      ],
+      "expert_resources": [
+        {
+          "title": "Northern Corn Leaf Blight (NC State)",
+          "url": "https://content.ces.ncsu.edu/northern-corn-leaf-blight"
+        }
+      ]
+    },
+    {
+      "class_id": "Corn___healthy",
+      "crop": "Corn",
+      "disease": "Healthy",
+      "is_healthy": true,
+      "severity": "None",
+      "symptoms": [],
+      "causes": [],
+      "doctor_diagnosis": "Corn plant appears healthy with no symptoms of disease.",
+      "issue_factors": {
+        "diseases": {
+          "detected": false,
+          "details": "No disease was detected. The plant appears healthy with no symptoms."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests are not causing any disease in this plant. Insect feeding wounds can create entry points, but currently no infection is present."
+        },
+        "overwatering": {
+          "detected": false,
+          "details": "Overwatering does not cause disease in this plant. Good watering practices should still be maintained to keep the plant healthy."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause disease in this plant. Keep consistent soil moisture for healthy growth."
+        },
+        "soil": {
+          "detected": false,
+          "details": "Soil conditions are not causing disease here. Good soil drainage and fertility should be maintained."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight is not causing any issue. The plant should receive adequate sunlight for healthy growth."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency is not causing disease. Balanced fertilization should be continued for optimal health."
+        },
+        "generalStress": {
+          "detected": false,
+          "details": "The plant is not under stress from any disease. Continue good care practices."
+        }
+      },
+      "treatment": [],
+      "prevention": [],
+      "expert_resources": []
+    },
+    {
+      "class_id": "Grape___Black_rot",
+      "crop": "Grape",
+      "disease": "Black Rot",
+      "is_healthy": false,
+      "severity": "High",
+      "symptoms": [
+        "Small purple spots on leaves and shoots, enlarging to tan or black lesions",
+        "Dark brown 'M'-shaped lesions on green stems",
+        "Shriveled black mummies on berries"
+      ],
+      "causes": [
+        "Fungus: Guignardia bidwellii",
+        "Warm (70-90\u00b0F) and humid conditions during bloom",
+        "Spores overwinter in mummified fruit and leaf debris"
+      ],
+      "doctor_diagnosis": "Black Rot is a serious fungal disease of grapes. It causes dark lesions on leaves and fruit, eventually blackening and mummifying the grapes, which can lead to severe yield loss.",
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Black Rot is present on this plant. It is caused by the fungus Guignardia bidwellii. Leaves show small purple spots that enlarge into tan centers with reddish-black margins. Infected berries shrivel and turn into hard black 'mummies'. Under warm, humid conditions during bloom, the disease can spread quickly and ruin clusters."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests are not causing Black Rot. However, insect feeding wounds can create entry points that allow pathogens like this fungus to infect plant tissue."
+        },
+        "overwatering": {
+          "detected": true,
+          "details": "Overwatering can contribute to Black Rot. Excess moisture and wet foliage create an ideal environment for the fungus. Water on leaves helps spores splash to new sites. Watering at the base or using drip irrigation reduces leaf wetness and helps control the disease."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause Black Rot. This disease requires warm, moist conditions to develop, so dry conditions do not favor it."
+        },
+        "soil": {
+          "detected": true,
+          "details": "Soil conditions can contribute to Black Rot. The fungus overwinters in mummified fruit and leaf debris in the vineyard floor. Removing and destroying old debris reduces inoculum for next season."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not directly cause Black Rot. However, good air circulation and sunlight help foliage dry faster, which reduces the humidity the fungus needs."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Black Rot. However, healthy plants with balanced nutrition are generally better able to resist infection."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "Black Rot can stress the grapevine by destroying fruit and foliage. Severe infections can significantly reduce yield and vine vigor if not treated."
+        }
+      },
+      "treatment": [
+        "Apply fungicides (e.g., captan, myclobutanil) at bloom and early fruit set",
+        "Prune out and destroy infected shoots and mummies in winter",
+        "Maintain canopy open for air movement"
+      ],
+      "prevention": [
+        "Remove dropped fruit and leaf litter",
+        "Use resistant grape varieties when available"
+      ],
+      "expert_resources": [
+        {
+          "title": "Grape black rot (Uni. WI)",
+          "url": "https://hort.extension.wisc.edu/articles/grape-black-rot"
+        }
+      ]
+    },
+    {
+      "class_id": "Grape___Esca_(Black_Measles)",
+      "crop": "Grape",
+      "disease": "Esca (Black Measles)",
+      "is_healthy": false,
+      "severity": "High",
+      "symptoms": [
+        "Tiger-stripe leaf pattern with yellow and brown discolouration",
+        "Berries show dark spots (Black Measles pattern)",
+        "Sudden vine collapse in severe cases"
+      ],
+      "causes": [
+        "Fungal complex: Phaeomoniella chlamydospora + Phaeoacremonium spp.",
+        "Enters through pruning wounds",
+        "Stress conditions accelerate symptoms"
+      ],
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Esca (Black Measles) is present on this plant. Dark spots and stripes appear on the leaves, and grapes may shrivel or crack. This is a serious disease that lives inside the wood of the vine and is difficult to cure once established."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests do not cause Esca. This disease is caused by a group of fungal germs that enter through pruning wounds."
+        },
+        "overwatering": {
+          "detected": false,
+          "details": "Overwatering does not cause Esca. This disease enters through wounds in the vine wood, not through water on the leaves."
+        },
+        "underwatering": {
+          "detected": true,
+          "details": "Underwatering can contribute to Esca. Water stress weakens the vine and makes it less able to fight back against the disease. Keep your grapevines watered consistently, especially in dry periods."
+        },
+        "soil": {
+          "detected": false,
+          "details": "Soil conditions do not directly cause Esca. This disease lives in the wood of old vines and spreads through pruning wounds."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not cause Esca. Normal sunlight is good for the vine and helps it stay strong."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Esca. A well-fed vine is better at coping with the disease, but nutrients are not the root cause."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "This disease is putting serious stress on the plant. The disease is inside the vine wood and cannot be fully removed. If not managed, the vine will slowly decline and produce less fruit each year."
+        }
+      },
+      "treatment": [
+        "No chemical cure \u2014 paint all pruning wounds immediately with fungicidal wound sealant",
+        "Remove and burn severely infected vines",
+        "Minimise pruning wounds \u2014 use double pruning technique"
+      ],
+      "prevention": [
+        "Apply Trichoderma-based wound protectant after every pruning cut",
+        "Prune during dry weather when wound healing is fastest",
+        "Avoid large pruning wounds",
+        "Maintain balanced nutrition to reduce vine stress"
+      ],
+      "expert_resources": [
+        {
+          "title": "Esca (Black Measles) \u2014 UC IPM",
+          "url": "https://ipm.ucanr.edu/agriculture/grape/esca-black-measles/"
+        },
+        {
+          "title": "Grapevine Trunk Disease \u2014 Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Grapevine_trunk_disease"
+        },
+        {
+          "title": "Grape Pests & Diseases \u2014 UC ANR",
+          "url": "https://ucanr.edu/site/ucce-central-sierra-agriculture/grape-pests-diseases"
+        }
+      ],
+      "doctor_diagnosis": "Esca (Black Measles) is an issue affecting Grape. Proper management is required."
+    },
+    {
+      "class_id": "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+      "crop": "Grape",
+      "disease": "Leaf Blight (Isariopsis Leaf Spot)",
+      "is_healthy": false,
+      "severity": "Medium",
+      "symptoms": [
+        "Irregular brown necrotic lesions on older leaves",
+        "Lesions with diffuse margins, often coalescing",
+        "Premature defoliation in severe cases"
+      ],
+      "causes": [
+        "Fungus: Pseudocercospora vitis",
+        "Warm humid conditions late in season"
+      ],
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Leaf Blight is present on this plant. Dark brown spots appear on older leaves and the edges begin to dry and die. In severe cases leaves fall off early and the plant loses energy needed for fruit production."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests do not cause Grape Leaf Blight. This is a fungal disease and is not started by insects."
+        },
+        "overwatering": {
+          "detected": true,
+          "details": "Overwatering can contribute to Grape Leaf Blight. Wet leaves and high humidity help the fungus grow and spread. Water at the base only and avoid wetting leaves during watering."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause Grape Leaf Blight. The disease needs wet, humid conditions to spread \u2014 dry conditions are not a risk factor."
+        },
+        "soil": {
+          "detected": false,
+          "details": "Soil conditions do not directly cause Grape Leaf Blight. The fungus lives and spreads on the leaf surface, not in the soil."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not cause Grape Leaf Blight. Good sunlight and air circulation actually help reduce the spread of this disease."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Grape Leaf Blight. Keep your vines well-fed for faster recovery after treatment."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "This disease is putting stress on the plant. Early leaf drop reduces the plant's energy and can weaken grape production. Treat quickly before more leaves are lost."
+        }
+      },
+      "treatment": [
+        "Apply copper-based fungicide or Mancozeb at first signs",
+        "Remove and dispose of infected fallen leaves",
+        "Improve canopy ventilation with targeted pruning"
+      ],
+      "prevention": [
+        "Maintain open canopy through summer pruning",
+        "Avoid late-season overhead irrigation",
+        "Remove leaf debris at end of season"
+      ],
+      "expert_resources": [
+        {
+          "title": "Grape Leaf Diseases \u2014 UC IPM",
+          "url": "https://ipm.ucanr.edu/agriculture/grape/"
+        },
+        {
+          "title": "Pseudocercospora Leaf Spot \u2014 Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Pseudocercospora_vitis"
+        },
+        {
+          "title": "Grape Production \u2014 UMN Extension",
+          "url": "https://extension.umn.edu/fruit/growing-grapes-home-garden"
+        }
+      ],
+      "doctor_diagnosis": "Leaf Blight (Isariopsis Leaf Spot) is an issue affecting Grape. Proper management is required."
+    },
+    {
+      "class_id": "Grape___healthy",
+      "crop": "Grape",
+      "disease": "Healthy",
+      "is_healthy": true,
+      "severity": null,
+      "symptoms": [],
+      "causes": [],
+      "issue_factors": {
+        "diseases": {
+          "detected": false,
+          "details": "No disease detected. Your grapevine looks healthy and the leaves look clean."
+        },
+        "pests": {
+          "detected": false,
+          "details": "No pest damage visible. Check under the leaves occasionally for any new insect activity."
+        },
+        "overwatering": {
+          "detected": false,
+          "details": "No signs of overwatering. Continue watering at the base of the vine to keep roots healthy."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "No signs of underwatering. The vine looks well-watered and is growing normally."
+        },
+        "soil": {
+          "detected": false,
+          "details": "Soil conditions look fine. Good soil drainage is important for grapevines \u2014 make sure water does not pool around the base."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "The vine is getting good sunlight. Continue as normal and prune regularly to keep air flowing through the canopy."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "No signs of nutrient shortage. Keep up fertilizing through the growing season for strong fruit production."
+        },
+        "generalStress": {
+          "detected": false,
+          "details": "The plant is not under any stress. Keep monitoring every few days to catch problems early."
+        }
+      },
+      "treatment": [],
+      "prevention": [
+        "Apply preventive fungicide program starting at budbreak",
+        "Maintain open canopy for air circulation",
+        "Scout weekly for pests and disease"
+      ],
+      "expert_resources": [
+        {
+          "title": "Grape Diseases & IPM \u2014 UC IPM",
+          "url": "https://ipm.ucanr.edu/agriculture/grape/"
+        },
+        {
+          "title": "Grape Production \u2014 UMN Extension",
+          "url": "https://extension.umn.edu/fruit/growing-grapes-home-garden"
+        },
+        {
+          "title": "Viticulture \u2014 Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Viticulture"
+        }
+      ],
+      "doctor_diagnosis": "Healthy is an issue affecting Grape. Proper management is required."
+    },
+    {
+      "class_id": "Orange___Haunglongbing_(Citrus_greening)",
+      "crop": "Citrus",
+      "disease": "Huanglongbing (Citrus Greening)",
+      "is_healthy": false,
+      "severity": "High",
+      "symptoms": [
+        "Yellow shoots or mottled leaves, often with asymmetrical coloration",
+        "Misshapen, bitter fruit",
+        "Twigs and branches may die back"
+      ],
+      "causes": [
+        "Bacterium: Candidatus Liberibacter asiaticus",
+        "Spread by Asian citrus psyllid (Diaphorina citri)",
+        "No cure, fatal if unchecked"
+      ],
+      "doctor_diagnosis": "Huanglongbing (Citrus Greening) is a bacterial disease of citrus that causes yellowing of leaves and bitter, misshapen fruit. Infected trees decline and produce unmarketable fruit.",
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Huanglongbing (Citrus Greening) is present on this plant. It is caused by a phloem-inhabiting bacterium (Liberibacter) transmitted by the Asian citrus psyllid. Leaves show yellow mottling, often asymmetrically on each leaf. Fruit are small, lopsided, and bitter. Over time, infected trees decline in vigor and dieback."
+        },
+        "pests": {
+          "detected": true,
+          "details": "Pest damage can contribute to Huanglongbing (Citrus Greening). The Asian citrus psyllid feeds on the plant and spreads the bacteria from tree to tree. Insect feeding wounds also provide entry points for pathogens."
+        },
+        "overwatering": {
+          "detected": false,
+          "details": "Overwatering does not cause Huanglongbing. This disease is spread by an insect vector rather than irrigation."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause Huanglongbing. However, drought stress can weaken trees and make symptoms appear more severe."
+        },
+        "soil": {
+          "detected": false,
+          "details": "Soil conditions do not cause Huanglongbing. The bacterium is spread by insects, not by soil pathogens."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not directly cause Huanglongbing. Healthy trees should still receive full sun for optimal growth."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Huanglongbing. However, balanced fertilization supports tree health and may help infected trees sustain yields longer."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "Huanglongbing places serious stress on the tree. It reduces leaf function and fruit production. If not managed (by controlling vectors), infected trees will decline and yield losses will be severe."
+        }
+      },
+      "treatment": [
+        "Remove infected trees (no cure for HLB)",
+        "Control Asian citrus psyllid with insecticides",
+        "Use HLB-tolerant rootstocks if available"
+      ],
+      "prevention": [
+        "Monitor and control psyllid vector populations",
+        "Use certified disease-free nursery trees"
+      ],
+      "expert_resources": [
+        {
+          "title": "Citrus greening (UF/IFAS)",
+          "url": "https://citrusgreening.org/"
+        }
+      ]
+    },
+    {
+      "class_id": "Pepper,_bell___Bacterial_spot",
+      "crop": "Pepper, bell",
+      "disease": "Bacterial Spot",
+      "is_healthy": false,
+      "severity": "High",
+      "symptoms": [
+        "Small brown lesions on leaves surrounded by yellow halos",
+        "Fruits develop dark scabs",
+        "Leaves may defoliate under heavy infection"
+      ],
+      "causes": [
+        "Bacterium: Xanthomonas campestris pv. vesicatoria",
+        "Spread by rain splash and contaminated tools",
+        "Warm (75-86\u00b0F) and wet conditions favor spread"
+      ],
+      "doctor_diagnosis": "Bacterial Spot is a bacterial disease of bell peppers that causes small brown spots with yellow halos on leaves and fruit scabs. Severe infections can lead to defoliation and crop loss.",
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Bacterial Spot is present on this plant. It is caused by the bacterium Xanthomonas campestris pv. vesicatoria. Leaves show small brown water-soaked lesions often surrounded by yellow halos. Fruits develop dark, raised scabs. Under warm, humid conditions, the bacteria can spread rapidly to nearby plants."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests are not causing Bacterial Spot. However, insect feeding wounds can allow the bacteria to enter the leaf tissue."
+        },
+        "overwatering": {
+          "detected": true,
+          "details": "Overwatering can contribute to Bacterial Spot. Excess moisture on leaves creates a favorable environment for the bacteria. Water splash from overhead irrigation can carry bacteria between plants. Watering at the base or using drip irrigation helps reduce leaf wetness and disease spread."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause Bacterial Spot. This disease actually needs warm, wet conditions to spread, so drought stress does not trigger it."
+        },
+        "soil": {
+          "detected": false,
+          "details": "Soil conditions do not cause Bacterial Spot. The bacterium spreads through water and infected plant material, not through the soil."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not directly cause Bacterial Spot. However, healthy plants still need full sunlight for best growth."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Bacterial Spot. However, good fertilization supports plant health and may help plants better resist stress."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "Bacterial Spot can place stress on the plant by reducing leaf area and fruit quality. Severe infections can cause defoliation and unmarketable fruit if not managed."
+        }
+      },
+      "treatment": [
+        "Copper-based bactericides can reduce spread",
+        "Use disease-free seed and sanitation",
+        "Remove affected leaves and avoid overhead watering"
+      ],
+      "prevention": [
+        "Rotate crops away from peppers",
+        "Plant resistant pepper varieties if available"
+      ],
+      "expert_resources": [
+        {
+          "title": "Bacterial spot of pepper (NC State)",
+          "url": "https://plantpathology.ces.ncsu.edu/wp-content/uploads/2014/11/pepperbspot.pdf"
+        }
+      ]
+    },
+    {
+      "class_id": "Pepper,_bell___healthy",
+      "crop": "Pepper, bell",
+      "disease": "Healthy",
+      "is_healthy": true,
+      "severity": "None",
+      "symptoms": [],
+      "causes": [],
+      "doctor_diagnosis": "Bell pepper plant appears healthy with no symptoms of disease.",
+      "issue_factors": {
+        "diseases": {
+          "detected": false,
+          "details": "No disease was detected. The plant appears healthy with no symptoms."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests are not causing any disease in this plant. Good pest management should be maintained to keep the plant healthy."
+        },
+        "overwatering": {
+          "detected": false,
+          "details": "Overwatering does not cause disease in this plant. Proper watering at the base keeps the plant healthy."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause disease in this plant. Consistent soil moisture is important for growth."
+        },
+        "soil": {
+          "detected": false,
+          "details": "Soil conditions are not causing disease here. Maintain proper soil fertility and drainage."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight is not an issue. The plant should continue receiving adequate sunlight."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency is not causing problems. Keep fertilization balanced for healthy growth."
+        },
+        "generalStress": {
+          "detected": false,
+          "details": "The plant is not under stress from any disease. Continue good care practices."
+        }
+      },
+      "treatment": [],
+      "prevention": [],
+      "expert_resources": []
+    },
+    {
+      "class_id": "Potato___Early_blight",
+      "crop": "Potato",
+      "disease": "Early Blight",
+      "is_healthy": false,
+      "severity": "High",
+      "symptoms": [
+        "Irregular brown to black spots with concentric rings on lower leaves",
+        "Leaves yellow and drop",
+        "Fruit and stem lesions"
+      ],
+      "causes": [
+        "Fungus: Alternaria solani",
+        "High temperatures (77-88\u00b0F) with high humidity",
+        "Infected cull piles or seed"
+      ],
+      "doctor_diagnosis": "Early Blight is a common fungal disease of potato that causes leaf spots with target-like rings. Severe infections can cause defoliation and reduce tuber yield.",
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Early Blight is present on this plant. It is caused by the fungus Alternaria solani. The lower leaves have irregular brown to black spots often with concentric rings. Infected leaves yellow and die. Under warm, humid conditions, lesions expand quickly and may cause extensive defoliation."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests are not causing Early Blight. However, insect damage can create wounds that allow fungal pathogens to enter the tissue."
+        },
+        "overwatering": {
+          "detected": true,
+          "details": "Overwatering can contribute to Early Blight. Excess soil moisture and humidity favor fungal growth. Water splash can move spores to lower leaves. Watering carefully at soil level and avoiding water on foliage can reduce spread."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause Early Blight. This disease typically requires warm, moist conditions to develop, so drought stress does not trigger it."
+        },
+        "soil": {
+          "detected": true,
+          "details": "Soil conditions can contribute to Early Blight. The fungus survives in cull piles and soil from previous crops. Good crop rotation and sanitation of infected debris help prevent disease carryover."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not directly cause Early Blight. However, good sunlight and air circulation help foliage dry faster and can limit disease severity."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Early Blight. However, well-fertilized plants may grow more vigorously and better tolerate infection."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "Early Blight can stress the potato plant by destroying leaf area. Severe infections can significantly reduce photosynthesis, leading to smaller tubers and yield loss."
+        }
+      },
+      "treatment": [
+        "Apply fungicides (e.g., chlorothalonil) on a regular schedule",
+        "Remove volunteer potatoes and crop debris",
+        "Plant resistant varieties if available"
+      ],
+      "prevention": [
+        "Rotate with non-host crops (e.g., corn, legumes)",
+        "Use certified disease-free seed potatoes"
+      ],
+      "expert_resources": [
+        {
+          "title": "Potato Early Blight (USDA)",
+          "url": "https://www.ars.usda.gov/pacific-west-area/riverside-ca/cwru/docs/potato-early-blight/"
+        }
+      ]
+    },
+    {
+      "class_id": "Potato___Late_blight",
+      "crop": "Potato",
+      "disease": "Late Blight",
+      "is_healthy": false,
+      "severity": "High",
+      "symptoms": [
+        "Large irregular water-soaked lesions on leaves and stems",
+        "White fuzzy sporulation on leaf undersides in humid weather",
+        "Tubers develop brown rot under the skin"
+      ],
+      "causes": [
+        "Oomycete: Phytophthora infestans",
+        "Cool temperatures (50-75\u00b0F) with high humidity",
+        "Windborne spores from nearby outbreaks"
+      ],
+      "doctor_diagnosis": "Late Blight is a devastating disease of potato and tomato. It causes large dark lesions on leaves and fuzzy growth on the underside. Infected tubers rot in storage, and crops can be wiped out rapidly in cool, wet conditions.",
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Late Blight is present on this plant. It is caused by the oomycete Phytophthora infestans. Leaves and stems show large water-soaked lesions that turn dark brown or black. In humid weather, white fuzzy sporulation appears on the undersides of leaves. Tubers and fruits become infected, turning brown and rotting. The disease can spread rapidly under cool, wet conditions."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests are not causing Late Blight. However, insect wounds can create entry points that allow the pathogen to infect the plant."
+        },
+        "overwatering": {
+          "detected": true,
+          "details": "Overwatering can contribute to Late Blight. Excess moisture and humidity create ideal conditions for the pathogen. Overhead irrigation can increase leaf wetness. Using drip irrigation and avoiding water on foliage helps minimize risk."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause Late Blight. The disease actually needs abundant moisture to spread; dry conditions are not conducive to infection."
+        },
+        "soil": {
+          "detected": true,
+          "details": "Soil conditions can contribute to Late Blight. The pathogen can survive in infected tubers left in the soil or cull piles. Removing volunteer potatoes and infected debris prevents overwintering of the pathogen."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not directly cause Late Blight. However, open sunny canopies help leaves dry faster and may reduce disease severity."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Late Blight. However, balanced fertilization improves plant health, which can help resist stress."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "Late Blight causes severe stress on the plant by destroying foliage and tubers. Rapid spread can lead to complete crop failure."
+        }
+      },
+      "treatment": [
+        "Apply appropriate fungicides (e.g., chlorothalonil, mancozeb) at first signs",
+        "Destroy infected plants immediately",
+        "Ensure good field sanitation"
+      ],
+      "prevention": [
+        "Plant certified disease-free seed",
+        "Avoid overhead irrigation"
+      ],
+      "expert_resources": [
+        {
+          "title": "Potato and Tomato Late Blight (WSPP)",
+          "url": "https://www.plantwise.org/knowledgebank/datasheet/42751"
+        }
+      ]
+    },
+    {
+      "class_id": "Potato___healthy",
+      "crop": "Potato",
+      "disease": "Healthy",
+      "is_healthy": true,
+      "severity": "None",
+      "symptoms": [],
+      "causes": [],
+      "doctor_diagnosis": "Potato plant appears healthy with no symptoms of disease.",
+      "issue_factors": {
+        "diseases": {
+          "detected": false,
+          "details": "No disease was detected. The plant appears healthy with no symptoms."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests are not causing any disease. Continue monitoring, as insect wounds can later allow infections."
+        },
+        "overwatering": {
+          "detected": false,
+          "details": "Overwatering does not cause disease in this plant. Maintain proper soil moisture to keep it healthy."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause disease in this plant. Keep the soil evenly moist for best growth."
+        },
+        "soil": {
+          "detected": false,
+          "details": "Soil conditions are not causing disease here. Good drainage and fertility should be maintained."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight is not an issue. The plant should continue receiving adequate sunlight."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency is not causing problems. Balanced nutrition is important for continued plant health."
+        },
+        "generalStress": {
+          "detected": false,
+          "details": "The plant is not under stress from any disease. Continue good care practices."
+        }
+      },
+      "treatment": [],
+      "prevention": [],
+      "expert_resources": []
+    },
+    {
+      "class_id": "Soybean___healthy",
+      "crop": "Soybean",
+      "disease": "Healthy",
+      "is_healthy": true,
+      "severity": null,
+      "symptoms": [],
+      "causes": [],
+      "issue_factors": {
+        "diseases": {
+          "detected": false,
+          "details": "No disease detected. Your soybean plant looks healthy and is growing well."
+        },
+        "pests": {
+          "detected": false,
+          "details": "No pest damage visible. Check the leaves and pods regularly for any insect activity."
+        },
+        "overwatering": {
+          "detected": false,
+          "details": "No signs of overwatering. Soybeans need consistent moisture but also good drainage \u2014 continue as normal."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "No signs of underwatering. The plant looks well-watered and is in good shape."
+        },
+        "soil": {
+          "detected": false,
+          "details": "Soil conditions look fine. Good soil health is important for soybeans \u2014 rotate crops every 2-3 years to keep the soil productive."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "The plant is getting enough sunlight. Soybeans need full sun for good pod development \u2014 continue as normal."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "No signs of nutrient shortage. Soybeans can get nitrogen from the soil naturally \u2014 keep up regular fertilizing for other nutrients."
+        },
+        "generalStress": {
+          "detected": false,
+          "details": "The plant is not under any stress. Keep monitoring every 2-3 days to catch any problems early."
+        }
+      },
+      "treatment": [],
+      "prevention": [
+        "Use certified disease-free seed with appropriate seed treatments",
+        "Monitor for sudden death syndrome during wet periods",
+        "Ensure proper nodulation for nitrogen fixation"
+      ],
+      "expert_resources": [
+        {
+          "title": "Soybean Production \u2014 UMN Extension",
+          "url": "https://extension.umn.edu/soybean"
+        },
+        {
+          "title": "Soybean Production \u2014 Penn State Extension",
+          "url": "https://extension.psu.edu/soybean-production"
+        },
+        {
+          "title": "Soybean Diseases \u2014 Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Soybean"
+        }
+      ],
+      "doctor_diagnosis": "Healthy is an issue affecting Soybean. Proper management is required."
+    },
+    {
+      "class_id": "Strawberry___Leaf_scorch",
+      "crop": "Strawberry",
+      "disease": "Leaf Scorch",
+      "is_healthy": false,
+      "severity": "Medium",
+      "symptoms": [
+        "Irregular purple spots on upper leaf surface",
+        "Spots enlarge, centers turn brown-gray",
+        "Severe cases cause leaf edges to look scorched",
+        "Entire leaf death in heavy infections"
+      ],
+      "causes": [
+        "Fungus: Diplocarpon earlianum",
+        "Warm wet weather spreads spores",
+        "Overwinters in infected leaves"
+      ],
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Leaf Scorch is present on this plant. Small dark purple spots appear on the upper side of leaves, and the edges of the leaves begin to turn brown and dry out. Severely infected leaves die and fall off, reducing the plant's energy and fruit production."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests do not cause Leaf Scorch. This is a fungal disease and is not spread by insects."
+        },
+        "overwatering": {
+          "detected": true,
+          "details": "Overwatering can contribute to Leaf Scorch. Wet leaves and high humidity help the fungus spread. Water only at the base of the plant and avoid getting the leaves wet."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause Leaf Scorch. The disease needs moisture on leaf surfaces to spread \u2014 dry conditions are not a risk factor."
+        },
+        "soil": {
+          "detected": true,
+          "details": "Soil conditions can contribute to Leaf Scorch. The fungus survives in infected plant debris in the soil and on old leaves. Remove and destroy all old leaves around the plant to reduce the spread."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not cause Leaf Scorch. Good sunlight and air circulation actually help keep the leaves drier and reduce fungal spread."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Leaf Scorch. Well-fed plants recover better \u2014 continue fertilizing through treatment."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "This disease is putting stress on the plant. Leaf loss reduces the plant's energy and can lower your strawberry harvest. Act quickly to prevent more leaves from being infected."
+        }
+      },
+      "treatment": [
+        "Apply Captan or Myclobutanil fungicide",
+        "Remove and destroy infected leaves from the field",
+        "Renovate (mow and thin) the planting after harvest"
+      ],
+      "prevention": [
+        "Switch to drip irrigation \u2014 keep foliage dry",
+        "Remove infected leaf debris after harvest",
+        "Renovate planting annually after fruiting season",
+        "Plant resistant varieties (Allstar, Honeoye)"
+      ],
+      "expert_resources": [
+        {
+          "title": "Diplocarpon earlianum \u2014 Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Diplocarpon_earlianum"
+        },
+        {
+          "title": "Strawberry Diseases in Minnesota \u2014 UMN Extension",
+          "url": "https://extension.umn.edu/strawberry-farming/strawberry-diseases-minnesota"
+        },
+        {
+          "title": "Strawberry IPM \u2014 UC IPM",
+          "url": "https://ipm.ucanr.edu/agriculture/strawberry/"
+        }
+      ],
+      "doctor_diagnosis": "Leaf Scorch is an issue affecting Strawberry. Proper management is required."
+    },
+    {
+      "class_id": "Strawberry___healthy",
+      "crop": "Strawberry",
+      "disease": "Healthy",
+      "is_healthy": true,
+      "severity": null,
+      "symptoms": [],
+      "causes": [],
+      "issue_factors": {
+        "diseases": {
+          "detected": false,
+          "details": "No disease detected. Your strawberry plant looks healthy and the leaves look clean."
+        },
+        "pests": {
+          "detected": false,
+          "details": "No pest damage visible. Check under the leaves for tiny spider mites or aphids regularly."
+        },
+        "overwatering": {
+          "detected": false,
+          "details": "No signs of overwatering. Continue watering at the base to keep roots healthy and leaves dry."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "No signs of underwatering. The plant looks well-watered and is growing normally."
+        },
+        "soil": {
+          "detected": false,
+          "details": "Soil conditions look fine. Remove old and dead leaves regularly to keep the area around the plant clean."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "The plant is getting enough sunlight. Strawberries need full sun for good fruit production \u2014 continue as normal."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "No signs of nutrient shortage. Keep fertilizing for strong fruit development."
+        },
+        "generalStress": {
+          "detected": false,
+          "details": "The plant is not under any stress. Keep monitoring every 2-3 days to catch any problems early."
+        }
+      },
+      "treatment": [],
+      "prevention": [
+        "Renovate planting after harvest season",
+        "Use drip irrigation to keep foliage dry",
+        "Apply preventive fungicide during flowering"
+      ],
+      "expert_resources": [
+        {
+          "title": "Strawberry Diseases & IPM \u2014 UC IPM",
+          "url": "https://ipm.ucanr.edu/agriculture/strawberry/"
+        },
+        {
+          "title": "Strawberry Production \u2014 Penn State Extension",
+          "url": "https://extension.psu.edu/strawberry-production"
+        },
+        {
+          "title": "Strawberry \u2014 Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Strawberry"
+        }
+      ],
+      "doctor_diagnosis": "Healthy is an issue affecting Strawberry. Proper management is required."
+    },
+    {
+      "class_id": "Tomato___Bacterial_spot",
+      "crop": "Tomato",
+      "disease": "Bacterial Spot",
+      "is_healthy": false,
+      "severity": "High",
+      "symptoms": [
+        "Small water-soaked spots turning dark brown with yellow halos",
+        "Raised scab-like lesions on fruit",
+        "Severe defoliation under humid conditions"
+      ],
+      "causes": [
+        "Bacteria: Xanthomonas vesicatoria",
+        "Warm 75-86F with rain and overhead irrigation",
+        "Spreads through contaminated seed"
+      ],
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Bacterial Spot is present on this plant. Small dark spots with yellow edges appear on the leaves, and raised rough spots form on the fruits. It spreads quickly through water splashing and can ruin the fruit harvest."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests are not causing Bacterial Spot. However, insect bite wounds on leaves can let the bacteria enter the plant more easily."
+        },
+        "overwatering": {
+          "detected": true,
+          "details": "Overwatering can contribute to Bacterial Spot. Splashing water moves bacteria from leaf to leaf very easily. Switch to drip irrigation or water only at the base of the plant to reduce spreading."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause Bacterial Spot. The bacteria spreads through water and wet conditions \u2014 drought does not make this disease worse."
+        },
+        "soil": {
+          "detected": false,
+          "details": "Soil conditions do not cause Bacterial Spot. This disease spreads mainly through infected seeds and water splashing, not through the soil."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not cause Bacterial Spot. Good sunlight helps dry out the leaves and slow the bacteria from spreading."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Bacterial Spot. A well-fed plant recovers better from this disease \u2014 continue fertilizing normally."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "This disease is putting serious stress on the plant. Infected fruits develop rough spots and cannot be sold. If not treated within 1-2 weeks, the disease will spread further and more fruit will be lost."
+        }
+      },
+      "treatment": [
+        "Apply copper bactericide (copper hydroxide) + Mancozeb immediately",
+        "Spray every 5-7 days during warm wet weather",
+        "Remove heavily infected lower leaves",
+        "Avoid working in wet fields \u2014 bacteria spread on hands and tools"
+      ],
+      "prevention": [
+        "Use certified disease-free transplants and seed",
+        "Install drip irrigation \u2014 eliminate overhead watering",
+        "Rotate crops \u2014 avoid tomatoes and peppers in same field for 2 years",
+        "Apply copper spray preventively at transplanting"
+      ],
+      "expert_resources": [
+        {
+          "title": "Tomato Diseases & IPM \u2014 UC IPM",
+          "url": "https://ipm.ucanr.edu/agriculture/tomato/"
+        },
+        {
+          "title": "Tomato Disease Resources \u2014 Cornell Vegetables",
+          "url": "https://www.vegetables.cornell.edu/vegetables/tomato/"
+        },
+        {
+          "title": "Bacterial Spot of Pepper and Tomato \u2014 NC State Extension",
+          "url": "https://content.ces.ncsu.edu/bacterial-spot-of-pepper-and-tomato"
+        }
+      ],
+      "doctor_diagnosis": "Bacterial Spot is an issue affecting Tomato. Proper management is required."
+    },
+    {
+      "class_id": "Tomato___Early_blight",
+      "crop": "Tomato",
+      "disease": "Early Blight",
+      "is_healthy": false,
+      "severity": "High",
+      "symptoms": [
+        "Dark brown concentric rings on lower leaves (target-like spots)",
+        "Leaves yellow and drop",
+        "Circular dark lesions on fruit"
+      ],
+      "causes": [
+        "Fungus: Alternaria solani",
+        "Warm temperatures (75-90\u00b0F) with high humidity",
+        "Survives in soil and plant debris"
+      ],
+      "doctor_diagnosis": "Early Blight is a common fungal disease of tomato that causes concentric ring spots on leaves and dark lesions on fruit. Severe infections can defoliate plants and reduce yield.",
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Early Blight is present on this plant. It is caused by the fungus Alternaria solani. The lower leaves show dark brown spots with concentric rings. Infected leaves may yellow and fall off. Infected fruit develop brown, scab-like lesions. The disease thrives in warm, humid conditions."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests are not causing Early Blight. However, insect wounds can provide entry points for fungi like this one."
+        },
+        "overwatering": {
+          "detected": true,
+          "details": "Overwatering can contribute to Early Blight. Excess moisture and humidity in the canopy favor the fungus. Water splash can spread spores to healthy leaves. Watering at the base and avoiding wetting foliage can reduce spread."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause Early Blight. The fungus needs moisture to infect; dry conditions do not trigger it."
+        },
+        "soil": {
+          "detected": true,
+          "details": "Soil conditions can contribute to Early Blight. The fungus survives in soil and crop debris. Removing plant debris and rotating crops helps reduce the inoculum."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not directly cause Early Blight. Adequate sunlight and spacing help leaves dry faster, which can reduce disease severity."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Early Blight. Balanced nutrition helps keep plants vigorous and better able to resist stress."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "Early Blight places stress on the plant by destroying foliage. Severe infection can significantly reduce the plant\u2019s ability to produce fruit."
+        }
+      },
+      "treatment": [
+        "Apply fungicides (e.g., chlorothalonil, copper) early",
+        "Remove lower leaves and debris",
+        "Mulch around base to prevent soil splash"
+      ],
+      "prevention": [
+        "Rotate with non-tomato crops",
+        "Plant resistant varieties (if available)"
+      ],
+      "expert_resources": [
+        {
+          "title": "Tomato early blight (Cornell)",
+          "url": "https://vegmgmt.hort.cornell.edu/recommends/tomato/tom_earlyblight.html"
+        }
+      ]
+    },
+    {
+      "class_id": "Tomato___Late_blight",
+      "crop": "Tomato",
+      "disease": "Late Blight",
+      "is_healthy": false,
+      "severity": "High",
+      "symptoms": [
+        "Water-soaked spots on leaves that turn brown or black",
+        "White fuzzy growth on underside of leaves in humid conditions",
+        "Dark lesions on stems and green fruit"
+      ],
+      "causes": [
+        "Oomycete: Phytophthora infestans",
+        "Cool, wet weather (55-75\u00b0F)",
+        "Windborne spores from nearby outbreaks"
+      ],
+      "doctor_diagnosis": "Late Blight is a serious disease of tomato (and potato) that causes large dark spots on foliage and fruit. In wet conditions, white moldy growth appears. The disease can rapidly destroy tomato crops.",
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Late Blight is present on this plant. It is caused by the oomycete Phytophthora infestans. Leaves have water-soaked lesions that rapidly turn brown. In humid weather, white fuzzy sporulation forms on leaf undersides. Stems and green fruit also get dark lesions. This disease spreads quickly in cool, wet weather."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests are not causing Late Blight. However, feeding injuries can allow the pathogen to infect the plant more easily."
+        },
+        "overwatering": {
+          "detected": true,
+          "details": "Overwatering can contribute to Late Blight. Waterlogged soil and wet foliage create ideal conditions for the pathogen. Drip irrigation and avoiding overhead watering help minimize leaf wetness."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause Late Blight. The pathogen requires moisture to infect; dry conditions do not promote it."
+        },
+        "soil": {
+          "detected": true,
+          "details": "Soil conditions can contribute to Late Blight. The pathogen can overwinter in tubers or plant debris left in the field. Removing crop debris and planting healthy seed reduce risk."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not directly cause Late Blight. Adequate sunlight exposure helps plants stay healthy and dry out faster."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Late Blight. However, proper nutrition supports plant health, which can help tolerate stress better."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "Late Blight causes severe stress by destroying foliage and fruit. Infected plants collapse quickly, leading to total loss if unchecked."
+        }
+      },
+      "treatment": [
+        "Apply appropriate fungicides (e.g., chlorothalonil) at first signs",
+        "Remove and destroy infected plants"
+      ],
+      "prevention": [
+        "Use certified disease-free transplants",
+        "Avoid overhead irrigation"
+      ],
+      "expert_resources": [
+        {
+          "title": "Tomato Late Blight (USDA)",
+          "url": "https://www.planthealth.info/2020/07/tomato-late-blight"
+        }
+      ]
+    },
+    {
+      "class_id": "Tomato___Leaf_Mold",
+      "crop": "Tomato",
+      "disease": "Leaf Mold",
+      "is_healthy": false,
+      "severity": "High",
+      "symptoms": [
+        "Yellow spots on upper leaf surfaces",
+        "Fuzzy gray to tan mold on undersides of leaves",
+        "Leaves eventually turn brown and die"
+      ],
+      "causes": [
+        "Fungus: Fulvia fulva (Cladosporium fulvum)",
+        "Long periods of high humidity (\u226585%)",
+        "Poor air circulation in greenhouse/crowded plantings"
+      ],
+      "doctor_diagnosis": "Leaf Mold is a fungal disease of tomato that causes yellow patches on leaves and grayish mold underneath. Infected foliage quickly dies, leading to defoliation.",
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Leaf Mold is present on this plant. It is caused by the fungus Fulvia fulva. The upper surfaces of leaves have yellow spots, and the undersides develop a dense gray mold. Infected leaves turn brown and fall off. The disease thrives in high humidity with poor airflow."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests are not causing Leaf Mold. However, insect damage can create entry points, though Leaf Mold primarily relies on humidity."
+        },
+        "overwatering": {
+          "detected": true,
+          "details": "Overwatering can contribute to Leaf Mold. Excess moisture and humidity around plants create ideal conditions for the fungus. Improving airflow and watering at the base help reduce leaf wetness."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause Leaf Mold. The pathogen actually needs high humidity; dry conditions limit its growth."
+        },
+        "soil": {
+          "detected": false,
+          "details": "Soil conditions do not cause Leaf Mold. The fungus lives on leaf surfaces and thrives in humid air, not in soil."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not directly cause Leaf Mold. Adequate light and spacing help plants dry and reduce humidity."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Leaf Mold. However, healthy nutrition ensures vigorous growth that can better withstand stress."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "Leaf Mold stresses the plant by destroying foliage. Severe infections lead to defoliation, reducing yield and plant vigor."
+        }
+      },
+      "treatment": [
+        "Use fungicidal sprays (e.g., chlorothalonil) early",
+        "Remove infected leaves",
+        "Increase greenhouse ventilation and reduce humidity"
+      ],
+      "prevention": [
+        "Space plants for good air flow",
+        "Avoid overhead watering"
+      ],
+      "expert_resources": [
+        {
+          "title": "Tomato Leaf Mold (Clemson Extension)",
+          "url": "https://hgic.clemson.edu/factsheet/tomato-leaf-mold/"
+        }
+      ]
+    },
+    {
+      "class_id": "Tomato___Septoria_leaf_spot",
+      "crop": "Tomato",
+      "disease": "Septoria Leaf Spot",
+      "is_healthy": false,
+      "severity": "High",
+      "symptoms": [
+        "Numerous small circular tan spots with dark edges on older leaves",
+        "White centers in advanced lesions",
+        "Lower leaves may turn yellow and drop"
+      ],
+      "causes": [
+        "Fungus: Septoria lycopersici",
+        "Warm (70-80\u00b0F) and humid conditions",
+        "Spores splash from soil or rain to foliage"
+      ],
+      "doctor_diagnosis": "Septoria Leaf Spot is a fungal disease of tomato that causes many small round spots on older leaves. Severe infections can defoliate the plant and weaken it.",
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Septoria Leaf Spot is present on this plant. It is caused by the fungus Septoria lycopersici. The older leaves show numerous small tan spots with dark brown margins, often with white centers. Infected leaves turn yellow and fall. The fungus spreads via rain splash in warm, humid weather."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests are not causing Septoria Leaf Spot. However, insects can create wounds that allow pathogens to enter more easily."
+        },
+        "overwatering": {
+          "detected": true,
+          "details": "Overwatering can contribute to Septoria Leaf Spot. Leaf wetness from overhead irrigation or rain helps spores germinate and spread. Watering at the soil level and mulching can reduce splash."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause Septoria Leaf Spot. The pathogen actually requires moisture; dry conditions limit its development."
+        },
+        "soil": {
+          "detected": true,
+          "details": "Soil conditions can contribute to Septoria Leaf Spot. The fungus can survive on infected debris in the soil. Removing and destroying old foliage helps prevent spread."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not directly cause Septoria Leaf Spot. However, adequate sunlight and spacing improve drying and reduce disease risk."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Septoria Leaf Spot. Balanced nutrition ensures healthy foliage that can tolerate stress better."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "Septoria Leaf Spot stresses the plant by defoliating the foliage. Severe infection can greatly reduce yield if not managed."
+        }
+      },
+      "treatment": [
+        "Apply fungicides (e.g., chlorothalonil, copper) regularly",
+        "Prune lower leaves and remove debris",
+        "Improve soil drainage and mulching"
+      ],
+      "prevention": [
+        "Space plants to increase air flow",
+        "Rotate with non-tomato crops"
+      ],
+      "expert_resources": [
+        {
+          "title": "Tomato Septoria Leaf Spot (UC IPM)",
+          "url": "http://ipm.ucanr.edu/PMG/r783101911.html"
+        }
+      ]
+    },
+    {
+      "class_id": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "crop": "Tomato",
+      "disease": "Spider Mites",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "symptoms": [
+        "Stippled yellow or bronzed foliage",
+        "Fine webbing on undersides of leaves",
+        "Leaves eventually turn brown and drop"
+      ],
+      "causes": [
+        "Pest: Two-spotted spider mite (Tetranychus urticae)",
+        "Thrives in hot, dry conditions",
+        "Rapid reproduction under warm stress"
+      ],
+      "doctor_diagnosis": "Spider mites are tiny pests that suck sap from tomato leaves, causing yellow stippling and webbing. Severe infestations can defoliate plants.",
+      "issue_factors": {
+        "diseases": {
+          "detected": false,
+          "details": "No disease was detected on this plant. The foliage damage is caused by pests (spider mites), not a pathogen."
+        },
+        "pests": {
+          "detected": true,
+          "details": "Pest damage is contributing to this problem. Two-spotted spider mites are feeding on the leaves and creating fine webbing. Their feeding causes yellow stippling and leaf browning."
+        },
+        "overwatering": {
+          "detected": false,
+          "details": "Overwatering does not cause spider mite infestations. Actually, spider mites often thrive when plants are under drought stress and high heat."
+        },
+        "underwatering": {
+          "detected": true,
+          "details": "Underwatering can contribute to spider mite problems. Drought-stressed plants are more vulnerable to mite infestation and damage."
+        },
+        "soil": {
+          "detected": false,
+          "details": "Soil conditions do not directly cause spider mites. However, poor soil moisture can stress plants, making them more susceptible."
+        },
+        "sunlight": {
+          "detected": true,
+          "details": "Sunlight levels can influence spider mite pressure. Hot, sunny conditions favor mite reproduction and spread."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not directly cause spider mites. However, healthy nutrition can help plants recover from mite damage."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "Spider mite infestation is stressing the plant significantly. It is causing leaf damage and reduced vigor. If not controlled quickly, the plant may lose most of its foliage."
+        }
+      },
+      "treatment": [
+        "Spray with miticides (e.g., abamectin) or insecticidal soap",
+        "Increase humidity (mites dislike moisture)",
+        "Release natural predators (predatory mites)"
+      ],
+      "prevention": [
+        "Maintain adequate watering and plant vigor",
+        "Monitor plants regularly, especially in hot dry weather"
+      ],
+      "expert_resources": [
+        {
+          "title": "Tomato Spider Mites (University of Minnesota)",
+          "url": "https://extension.umn.edu/plant-diseases/mites-affecting-vegetables"
+        }
+      ]
+    },
+    {
+      "class_id": "Tomato___Target_Spot",
+      "crop": "Tomato",
+      "disease": "Target Spot",
+      "is_healthy": false,
+      "severity": "Medium",
+      "symptoms": [
+        "Brown circular lesions with concentric ring pattern",
+        "Yellow halo around lesions",
+        "Affects leaves, stems, and fruit",
+        "Defoliation under severe conditions"
+      ],
+      "causes": [
+        "Fungus: Corynespora cassiicola",
+        "Warm humid conditions",
+        "Dense planting with poor air circulation"
+      ],
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Target Spot is present on this plant. Circular brown spots with lighter rings inside \u2014 like a target \u2014 appear on the leaves. The disease can spread to stems and fruit if not treated and causes significant leaf drop."
+        },
+        "pests": {
+          "detected": false,
+          "details": "Pests do not cause Target Spot. This is a fungal disease and is not spread by insects."
+        },
+        "overwatering": {
+          "detected": true,
+          "details": "Overwatering can contribute to Target Spot. Wet leaves and high humidity help the fungus grow and spread. Water only at the base of the plant \u2014 never wet the foliage."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause Target Spot. The disease needs warm, moist conditions to spread \u2014 dry conditions are not a risk."
+        },
+        "soil": {
+          "detected": true,
+          "details": "Soil conditions can contribute to Target Spot. The fungus lives in old plant material in the soil. Remove all plant debris after harvest and rotate crops each season."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not cause Target Spot. Good sunlight and air circulation help keep leaves dry and reduce fungal spread."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Target Spot. Keep the plant well-fed to help it recover more quickly after treatment."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "This disease is putting stress on the plant. Significant leaf loss reduces tomato production. Remove infected leaves and spray with fungicide as soon as possible."
+        }
+      },
+      "treatment": [
+        "Apply Chlorothalonil or Azoxystrobin fungicide at first symptom",
+        "Remove and destroy infected lower leaves",
+        "Improve plant spacing for better air circulation",
+        "Spray every 7-10 days during humid conditions"
+      ],
+      "prevention": [
+        "Maintain adequate plant spacing \u2014 avoid dense planting",
+        "Stake and train plants for canopy ventilation",
+        "Use drip irrigation to keep foliage dry",
+        "Remove plant debris after harvest"
+      ],
+      "expert_resources": [
+        {
+          "title": "Tomato Diseases & IPM \u2014 UC IPM",
+          "url": "https://ipm.ucanr.edu/agriculture/tomato/"
+        },
+        {
+          "title": "Tomato Disease Resources \u2014 Cornell Vegetables",
+          "url": "https://www.vegetables.cornell.edu/vegetables/tomato/"
+        },
+        {
+          "title": "Corynespora Cassiicola \u2014 Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Corynespora_cassiicola"
+        }
+      ],
+      "doctor_diagnosis": "Target Spot is an issue affecting Tomato. Proper management is required."
+    },
+    {
+      "class_id": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "crop": "Tomato",
+      "disease": "Tomato Yellow Leaf Curl Virus (TYLCV)",
+      "is_healthy": false,
+      "severity": "High",
+      "symptoms": [
+        "Yellowing and curling of young leaves",
+        "Stunted plant growth",
+        "Poor fruit set and yield"
+      ],
+      "causes": [
+        "Virus: Tomato yellow leaf curl virus (TYLCV)",
+        "Transmitted by whitefly (Bemisia tabaci)",
+        "No chemical cure, virus persists in plant"
+      ],
+      "doctor_diagnosis": "Tomato Yellow Leaf Curl Virus is a viral disease that causes yellow, curled leaves and severe stunting. Infected plants produce few fruit and yield is drastically reduced.",
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Tomato Yellow Leaf Curl Virus is present on this plant. Infected plants have yellowing and cupped young leaves, and overall growth is stunted. The virus is carried by whiteflies and there is no direct treatment."
+        },
+        "pests": {
+          "detected": true,
+          "details": "Pest damage is contributing to this problem. Whiteflies transmit the virus when they feed on the plant. Controlling whiteflies is critical to managing this disease."
+        },
+        "overwatering": {
+          "detected": false,
+          "details": "Overwatering does not cause TYLCV. The disease is transmitted by whiteflies, not irrigation."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause TYLCV. However, drought-stressed plants may be more severely impacted by viral infection."
+        },
+        "soil": {
+          "detected": false,
+          "details": "Soil conditions do not cause TYLCV. The virus is systemic in the plant and spread by insects."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not directly cause TYLCV. Plants should still receive full sun for best growth and vigor."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause TYLCV. However, balanced fertilization helps keep plants healthier overall."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "TYLCV causes severe stress to the plant by reducing photosynthesis and growth. Infected plants often have no marketable yield."
+        }
+      },
+      "treatment": [
+        "Remove and destroy infected plants immediately",
+        "Control whitefly with appropriate insecticides",
+        "Use reflective mulches to repel whiteflies"
+      ],
+      "prevention": [
+        "Plant TYLCV-resistant tomato varieties",
+        "Use insect-proof screens in greenhouses",
+        "Apply reflective mulch and avoid planting near infested areas"
+      ],
+      "expert_resources": [
+        {
+          "title": "Tomato Yellow Leaf Curl Virus (UC IPM)",
+          "url": "https://ipm.ucanr.edu/PMG/r783101311.html"
+        }
+      ]
+    },
+    {
+      "class_id": "Tomato___Tomato_mosaic_virus",
+      "crop": "Tomato",
+      "disease": "Tomato Mosaic Virus (ToMV)",
+      "is_healthy": false,
+      "severity": "Moderate",
+      "symptoms": [
+        "Mottled, light and dark green mosaic patterns on leaves",
+        "Stunted and distorted plant growth",
+        "Reduced yield and fruit quality"
+      ],
+      "causes": [
+        "Virus: Tobacco mosaic virus strain infecting tomato",
+        "Spread by contaminated tools, hands, or seed",
+        "No chemical control"
+      ],
+      "doctor_diagnosis": "Tomato Mosaic Virus is a viral disease that causes a green mosaic pattern on leaves and stunts plant growth. Infected plants produce smaller, often misshapen fruit.",
+      "issue_factors": {
+        "diseases": {
+          "detected": true,
+          "details": "Tomato Mosaic Virus is present on this plant. The virus causes mottled light and dark green patterns on leaves. Infected plants may be stunted with distorted foliage. Fruit can be small and reduced in quality. The virus spreads easily via contact."
+        },
+        "pests": {
+          "detected": true,
+          "details": "Pest damage can contribute to disease spread. While insects do not directly transmit ToMV, their movement on plants can spread virus particles. Wounds can also allow viral infection to worsen."
+        },
+        "overwatering": {
+          "detected": false,
+          "details": "Overwatering does not cause Tomato Mosaic Virus. The virus is spread by contact, not by irrigation."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "Underwatering does not cause Tomato Mosaic Virus. However, drought stress can exacerbate virus symptoms in the plant."
+        },
+        "soil": {
+          "detected": false,
+          "details": "Soil conditions do not cause Tomato Mosaic Virus. The virus is present in plant tissue and spread mechanically."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "Sunlight does not directly cause Tomato Mosaic Virus. Adequate sunlight remains important for healthy growth."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "Nutrient deficiency does not cause Tomato Mosaic Virus. However, well-nourished plants may cope better with infection."
+        },
+        "generalStress": {
+          "detected": true,
+          "details": "Tomato Mosaic Virus stresses the plant by disrupting normal growth and reducing fruit set. Plants may remain stunted and yield lower harvests."
+        }
+      },
+      "treatment": [
+        "No chemical control; remove infected plants",
+        "Disinfect tools and hands to prevent spread",
+        "Use virus-free seed and resistant varieties"
+      ],
+      "prevention": [
+        "Practice good hygiene (clean tools/hands)",
+        "Rotate crops to break virus cycles"
+      ],
+      "expert_resources": [
+        {
+          "title": "Tomato mosaic virus (NC State)",
+          "url": "https://plants.extension.org/articles/tomato-mosaic-virus"
+        }
+      ]
+    },
+    {
+      "class_id": "Tomato___healthy",
+      "crop": "Tomato",
+      "disease": "Healthy",
+      "is_healthy": true,
+      "severity": null,
+      "symptoms": [],
+      "causes": [],
+      "issue_factors": {
+        "diseases": {
+          "detected": false,
+          "details": "No disease detected. Your tomato plant looks healthy and the leaves look clean."
+        },
+        "pests": {
+          "detected": false,
+          "details": "No pest damage visible. Check under leaves regularly for small insects like whiteflies or spider mites."
+        },
+        "overwatering": {
+          "detected": false,
+          "details": "No signs of overwatering. Continue watering at the base of the plant to keep roots healthy and leaves dry."
+        },
+        "underwatering": {
+          "detected": false,
+          "details": "No signs of underwatering. The plant looks well-watered and is growing normally."
+        },
+        "soil": {
+          "detected": false,
+          "details": "Soil conditions look fine. Rotate crops each season to prevent soil-borne diseases from building up."
+        },
+        "sunlight": {
+          "detected": false,
+          "details": "The plant is getting enough sunlight. Tomatoes need full sun for good fruit production \u2014 continue as normal."
+        },
+        "nutrientDeficiency": {
+          "detected": false,
+          "details": "No signs of nutrient shortage. Keep fertilizing regularly through the growing season."
+        },
+        "generalStress": {
+          "detected": false,
+          "details": "The plant is not under any stress. Monitor every 2-3 days to catch any early signs of disease or pest activity."
+        }
+      },
+      "treatment": [],
+      "prevention": [
+        "Apply preventive fungicide during cool wet weather for Late Blight protection",
+        "Maintain consistent N nutrition throughout season",
+        "Install drip irrigation to keep foliage dry",
+        "Scout daily for whitefly and aphid populations"
+      ],
+      "expert_resources": [
+        {
+          "title": "Tomato Diseases & IPM \u2014 UC IPM",
+          "url": "https://ipm.ucanr.edu/agriculture/tomato/"
+        },
+        {
+          "title": "Tomato Disease Resources \u2014 Cornell Vegetables",
+          "url": "https://www.vegetables.cornell.edu/vegetables/tomato/"
+        },
+        {
+          "title": "Tomato \u2014 Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Tomato"
+        }
+      ],
+      "doctor_diagnosis": "Healthy is an issue affecting Tomato. Proper management is required."
+    }
+  ]
 }

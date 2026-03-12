@@ -70,6 +70,9 @@ CREATE_TABLES_SQL = [
         name          VARCHAR(100) NOT NULL,
         email         VARCHAR(100) UNIQUE NOT NULL,
         password_hash VARCHAR(255) NOT NULL,
+        is_verified   TINYINT(1)   NOT NULL DEFAULT 0,
+        otp_code      VARCHAR(6)   DEFAULT NULL,
+        otp_expires   BIGINT       DEFAULT NULL,
         avatar_url    TEXT,
         joined_at     BIGINT       NOT NULL,
         created_at    TIMESTAMP    DEFAULT CURRENT_TIMESTAMP
@@ -115,96 +118,30 @@ CREATE_TABLES_SQL = [
     """,
 
     """
-    CREATE TABLE IF NOT EXISTS admins (
-        id VARCHAR(36) PRIMARY KEY,
-        username VARCHAR(100) UNIQUE NOT NULL,
-        password_hash VARCHAR(255) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-    """,
-
-    """
-    CREATE TABLE IF NOT EXISTS login_attempts (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        user_id VARCHAR(36),
-        email VARCHAR(100),
-        success BOOLEAN NOT NULL,
-        ip_address VARCHAR(50),
-        attempted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-    """,
-
-    """
-    CREATE TABLE IF NOT EXISTS system_logs (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        log_type ENUM('error','info','warning') DEFAULT 'info',
-        source VARCHAR(100),
-        message TEXT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-    """,
-
-    """
-    CREATE TABLE IF NOT EXISTS request_metrics (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        endpoint VARCHAR(200),
-        method VARCHAR(10),
-        status_code INT,
-        response_time_ms FLOAT,
-        user_id VARCHAR(36),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-    """,
-
-    """
     CREATE TABLE IF NOT EXISTS chat_logs (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        user_id VARCHAR(36),
+        id           INT AUTO_INCREMENT PRIMARY KEY,
+        user_id      VARCHAR(36),
+        session_id   VARCHAR(36),
+        sequence_num INT DEFAULT 0,
         user_message TEXT,
-        ai_response TEXT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-    """,
-
-    """
-    CREATE TABLE IF NOT EXISTS disabled_users (
-        user_id VARCHAR(36) PRIMARY KEY,
-        reason TEXT,
-        disabled_by VARCHAR(36),
-        disabled_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ai_response  TEXT,
+        created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_session (session_id),
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     )
     """,
 ]
 
 
-def seed_admin():
-    """Create default admin if none exists. Called once on startup."""
-    try:
-        import bcrypt, uuid
-        conn = get_connection()
-        cur = conn.cursor()
-        cur.execute("SELECT id FROM admins LIMIT 1")
-        if cur.fetchone():
-            cur.close(); conn.close()
-            return
-        admin_id = str(uuid.uuid4())
-        pw_hash = bcrypt.hashpw(b"uzhavan@admin2024", bcrypt.gensalt()).decode()
-        cur.execute(
-            "INSERT INTO admins (id, username, password_hash) VALUES (%s, %s, %s)",
-            (admin_id, "admin", pw_hash)
-        )
-        cur.close(); conn.close()
-        print("[DB] Default admin created. Username: admin | Password: uzhavan@admin2024")
-    except Exception as e:
-        print(f"[DB] Admin seed error: {e}")
+
 
 
 def init_db():
     """
     Called once on FastAPI startup:
       1. Creates the 'uzhavan_ai' database if it doesn't exist.
-      2. Creates all 10 tables if they don't exist.
-      3. Seeds the default admin account.
+      2. Creates all tables if they don't exist.
+      3. Runs safe ALTER TABLE migrations for existing deployments.
     No MySQL Workbench or manual SQL needed.
     """
     _ensure_database_exists()
@@ -212,7 +149,77 @@ def init_db():
     cursor = conn.cursor()
     for sql in CREATE_TABLES_SQL:
         cursor.execute(sql)
+
+    # ── Safe migrations: add new columns ─────────────────────────────────────
+    # We use standard ALTER TABLE here. If the column already exists,
+    # the MySQL exception is caught and ignored.
+    column_migrations = [
+        "ALTER TABLE chat_logs ADD COLUMN session_id   VARCHAR(36) AFTER user_id",
+        "ALTER TABLE chat_logs ADD COLUMN sequence_num INT DEFAULT 0 AFTER session_id",
+        # History diseaseName fix — store disease_name alongside plant_name
+        "ALTER TABLE scan_results ADD COLUMN disease_name VARCHAR(200) DEFAULT '' AFTER plant_name",
+        # OTP verification columns
+        "ALTER TABLE users ADD COLUMN is_verified TINYINT(1) NOT NULL DEFAULT 0 AFTER password_hash",
+        "ALTER TABLE users ADD COLUMN otp_code    VARCHAR(6)  DEFAULT NULL       AFTER is_verified",
+        "ALTER TABLE users ADD COLUMN otp_expires BIGINT      DEFAULT NULL       AFTER otp_code",
+    ]
+    for migration in column_migrations:
+        try:
+            cursor.execute(migration)
+            conn.commit()
+            print(f"[DB] Migration success: {migration.split('ADD COLUMN')[1].strip().split(' ')[0]} added.")
+        except Exception:
+            # Catch "Duplicate column name" error and proceed
+            pass
+
+    # ── Safe migration: add idx_session index ────────────────────────────────
+    try:
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_session ON chat_logs (session_id)")
+        conn.commit()
+    except Exception:
+        pass  # Index already exists
+
+    # ── Safe migration: add FOREIGN KEY user_id → users(id) ──────────────────
+    # Delete orphaned rows first (user_id set but user no longer exists),
+    # then add the FK constraint.
+    try:
+        cursor.execute("""
+            DELETE FROM chat_logs
+            WHERE user_id IS NOT NULL
+              AND user_id NOT IN (SELECT id FROM users)
+        """)
+        conn.commit()
+        deleted_orphans = cursor.rowcount
+        if deleted_orphans > 0:
+            print(f"[DB] Removed {deleted_orphans} orphaned chat_logs rows before adding FK.")
+    except Exception as e:
+        print(f"[DB] Orphan cleanup warning: {e}")
+
+    try:
+        cursor.execute("""
+            ALTER TABLE chat_logs
+            ADD CONSTRAINT fk_chat_logs_user
+            FOREIGN KEY (user_id) REFERENCES users(id)
+            ON DELETE CASCADE
+        """)
+        conn.commit()
+        print("[DB] chat_logs FK constraint added.")
+    except Exception:
+        pass  # FK already exists — safe to ignore
+
+    # ── Safe migration: activate all existing users ─────────────────────────
+    # When is_verified column is first added it defaults to 0.
+    # This UPDATE ensures every pre-existing account is set to verified
+    # so they are NOT locked out when login starts checking the flag.
+    try:
+        cursor.execute("UPDATE users SET is_verified = 1 WHERE is_verified = 0 AND otp_code IS NULL")
+        activated = cursor.rowcount
+        conn.commit()
+        if activated > 0:
+            print(f"[DB] Activated {activated} existing user(s) (set is_verified=1).")
+    except Exception:
+        pass  # Column might not exist yet on very first run — safe to ignore
+
     cursor.close()
     conn.close()
-    seed_admin()
     print("[DB] All tables ready.")

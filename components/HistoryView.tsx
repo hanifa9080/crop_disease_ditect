@@ -368,7 +368,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
 
             // Use the first plant as the primary display item
             const primaryPlant = item.results[0];
-            const issues = Object.values(primaryPlant.issues);
+            const issues = Object.values(primaryPlant.issues || {});
             const issueCount = issues.filter((i: any) => i.detected).length;
             const isHealthy = issueCount === 0;
             const itemFolder = folders.find(f => f.id === item.folderId);
@@ -433,12 +433,24 @@ export const HistoryView: React.FC<HistoryViewProps> = ({
                       <h3 className="text-lg font-bold text-gray-800 truncate group-hover:text-emerald-700 transition-colors">
                         {primaryPlant.plantName}
                       </h3>
-                      <p className="text-xs font-medium mt-0.5 truncate">
-                        {primaryPlant.issues?.diseases?.detected
-                          ? <span className="text-red-500">{primaryPlant.diagnosis?.split('.')[0] || 'Disease Detected'}</span>
-                          : <span className="text-emerald-500">✓ Healthy</span>
-                        }
-                      </p>
+                      {/* Disease name badge — shown when diseaseName exists */}
+                      {(primaryPlant.diseaseName || '') !== '' && (
+                        <p className="text-xs font-semibold mt-0.5 truncate">
+                          {primaryPlant.issues?.diseases?.detected
+                            ? <span className="text-red-500">⚠ {primaryPlant.diseaseName}</span>
+                            : <span className="text-emerald-500">✓ {primaryPlant.diseaseName}</span>
+                          }
+                        </p>
+                      )}
+                      {/* Fallback for old scans that have no diseaseName stored */}
+                      {(!primaryPlant.diseaseName || primaryPlant.diseaseName === '') && (
+                        <p className="text-xs font-medium mt-0.5 truncate">
+                          {primaryPlant.issues?.diseases?.detected
+                            ? <span className="text-red-500">⚠ Disease Detected</span>
+                            : <span className="text-emerald-500">✓ Healthy</span>
+                          }
+                        </p>
+                      )}
                       <p className="text-sm text-gray-500 truncate mt-1">
                         {primaryPlant.diagnosis}
                       </p>

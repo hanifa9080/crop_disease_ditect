@@ -14,6 +14,28 @@ export interface PlantHealthIssues {
   generalStress: IssueCheck;
 }
 
+export type ARIssueType = 'disease' | 'nutrient' | 'dryness' | 'pest' | 'healthy' | 'unknown';
+
+export interface ARDetection {
+  label: string;
+  type: ARIssueType;
+  confidence: number;
+  box_2d: [number, number, number, number]; // [ymin, xmin, ymax, xmax] in normalized 0-1000
+}
+
+export interface ARDetailedReport {
+  disease_name: string;
+  confidence_score: number;
+  affected_area_description: string;
+  symptoms_observed: string[];
+  possible_causes: string[];
+  severity_level: 'Low' | 'Medium' | 'High';
+  immediate_actions: string[];
+  long_term_prevention: string[];
+  care_score: number; // 1-10
+  time_to_recovery: string;
+}
+
 export interface TreatmentStep {
   title: string;
   instruction: string;
@@ -27,6 +49,7 @@ export interface ExternalResource {
 
 export interface PlantAnalysisResult {
   plantName: string;
+  diseaseName: string;
   confidence: number; // 0-100
   alternatives: string[];
   issues: PlantHealthIssues;

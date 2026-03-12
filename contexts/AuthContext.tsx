@@ -1,12 +1,22 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User } from '../types';
 
+interface RegisterResult {
+  status: 'pending' | 'ok';
+  email?: string;
+}
+
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   isCheckingSession: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<RegisterResult>;
+  register: (name: string, email: string, password: string) => Promise<RegisterResult>;
+  verifyOtp: (email: string, otp: string) => Promise<void>;
+  resendOtp: (email: string) => Promise<void>;
+  forgotPassword: (email: string) => Promise<void>;
+  verifyResetOtp: (email: string, otp: string) => Promise<void>;
+  resetPassword: (email: string, otp: string, newPassword: string) => Promise<void>;
   logout: () => void;
   error: string | null;
   clearError: () => void;
@@ -36,7 +46,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       .finally(() => setIsCheckingSession(false));
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<RegisterResult> => {
     setIsLoading(true);
     setError(null);
     try {
@@ -50,8 +60,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         const e = await r.json();
         throw new Error(e.detail || 'Login failed');
       }
-      const u = await r.json();
-      setUser({ id: u.id, name: u.name, email: u.email, avatar: u.avatar, joinedAt: u.joinedAt });
+      const data = await r.json();
+      return data as RegisterResult;
     } catch (e: any) {
       setError(e.message);
       throw e;
@@ -60,7 +70,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
-  const register = async (name: string, email: string, password: string) => {
+  const register = async (name: string, email: string, password: string): Promise<RegisterResult> => {
     setIsLoading(true);
     setError(null);
     try {
@@ -74,8 +84,55 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         const e = await r.json();
         throw new Error(e.detail || 'Registration failed');
       }
+      const data = await r.json();
+      // Register now returns { status: "pending", email } — user must verify OTP
+      return data as RegisterResult;
+    } catch (e: any) {
+      setError(e.message);
+      throw e;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const verifyOtp = async (email: string, otp: string) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const r = await fetch('/api/auth/verify-otp', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp }),
+      });
+      if (!r.ok) {
+        const e = await r.json();
+        throw new Error(e.detail || 'Verification failed');
+      }
       const u = await r.json();
       setUser({ id: u.id, name: u.name, email: u.email, avatar: u.avatar, joinedAt: u.joinedAt });
+    } catch (e: any) {
+      setError(e.message);
+      throw e;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const resendOtp = async (email: string) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const r = await fetch('/api/auth/resend-otp', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp: '' }),
+      });
+      if (!r.ok) {
+        const e = await r.json();
+        throw new Error(e.detail || 'Could not resend OTP');
+      }
     } catch (e: any) {
       setError(e.message);
       throw e;
@@ -90,10 +147,74 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setUser(null);
   };
 
+  const forgotPassword = async (email: string) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const r = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      if (!r.ok) {
+        const e = await r.json();
+        throw new Error(e.detail || 'Could not send reset code');
+      }
+    } catch (e: any) {
+      setError(e.message);
+      throw e;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const verifyResetOtp = async (email: string, otp: string) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const r = await fetch('/api/auth/verify-reset-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp }),
+      });
+      if (!r.ok) {
+        const e = await r.json();
+        throw new Error(e.detail || 'Invalid or expired reset code');
+      }
+    } catch (e: any) {
+      setError(e.message);
+      throw e;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const resetPassword = async (email: string, otp: string, newPassword: string) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const r = await fetch('/api/auth/reset-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp, new_password: newPassword }),
+      });
+      if (!r.ok) {
+        const e = await r.json();
+        throw new Error(e.detail || 'Password reset failed');
+      }
+    } catch (e: any) {
+      setError(e.message);
+      throw e;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <AuthContext.Provider value={{
-      user, isLoading, isCheckingSession, login, register, logout,
-      error, clearError: () => setError(null)
+      user, isLoading, isCheckingSession, login, register, verifyOtp, resendOtp,
+      forgotPassword, verifyResetOtp, resetPassword,
+      logout, error, clearError: () => setError(null)
     }}>
       {children}
     </AuthContext.Provider>

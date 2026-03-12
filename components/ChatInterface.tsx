@@ -1,40 +1,83 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Bot, User, Loader2, ExternalLink, Image as ImageIcon, Trash2, Maximize2, Minimize2 } from 'lucide-react';
-import { chatWithBot } from '../services/backendService';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { MessageCircle, X, Send, Bot, Loader2, ExternalLink, Image as ImageIcon, Trash2, Maximize2, Minimize2 } from 'lucide-react';
+import { chatWithBot, fetchChatHistory, deleteChatHistory } from '../services/backendService';
 import { ChatMessage } from '../types';
+import { useAuth } from '../contexts/AuthContext';
+
+const SESSION_STORAGE_KEY = 'uzhavan_chat_session_id';
 
 export const ChatInterface: React.FC = () => {
+  const { user } = useAuth();  // null if not logged in
   const [isOpen, setIsOpen] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [attachedImage, setAttachedImage] = useState<string | null>(null);
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false);
+
+  // sessionId persists in localStorage so it survives page refresh.
+  const [sessionId, setSessionId] = useState<string>(() => {
+    const saved = localStorage.getItem(SESSION_STORAGE_KEY);
+    if (saved) return saved;
+    const newId = crypto.randomUUID();
+    localStorage.setItem(SESSION_STORAGE_KEY, newId);
+    return newId;
+  });
 
   const chatReadyRef = useRef<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const initSession = () => {
-    if (!chatReadyRef.current) {
-      chatReadyRef.current = true;
-      setMessages([
-        {
-          id: 'init',
-          role: 'model',
-          text: "Hi! I'm your plant expert assistant. Ask me anything about plant care, pests, or gardening tips! 🌱",
-          timestamp: Date.now()
-        }
-      ]);
-    }
+  const WELCOME_MESSAGE: ChatMessage = {
+    id: 'init',
+    role: 'model',
+    text: "Hi! I'm your plant expert assistant. Ask me anything about plant care, pests, or gardening tips! 🌱",
+    timestamp: Date.now()
   };
 
-  // Initialize chat when opened if not already initialized
+  // Load history from DB on first open, or show welcome if no history exists.
+  const initSession = useCallback(async () => {
+    if (chatReadyRef.current) return;
+    chatReadyRef.current = true;
+
+    // Guests (not logged in) get a fresh chat every time — no history to load
+    if (!user) {
+      setMessages([WELCOME_MESSAGE]);
+      return;
+    }
+
+    setIsLoadingHistory(true);
+    try {
+      const dbMessages = await fetchChatHistory(sessionId);
+
+      if (dbMessages.length === 0) {
+        // No history found for this session — fresh start
+        setMessages([WELCOME_MESSAGE]);
+      } else {
+        // Reconstruct ChatMessage[] from DB rows
+        const restored: ChatMessage[] = dbMessages.map((m, idx) => ({
+          id: `restored-${idx}`,
+          role: m.role as 'user' | 'model',
+          text: m.content,
+          timestamp: m.timestamp,
+        }));
+        // Insert welcome message at position 0 so UI looks right
+        setMessages([WELCOME_MESSAGE, ...restored]);
+      }
+    } catch {
+      setMessages([WELCOME_MESSAGE]);
+    } finally {
+      setIsLoadingHistory(false);
+    }
+  }, [user, sessionId]);
+
+  // Trigger session init when chat opens
   useEffect(() => {
     if (isOpen) {
       initSession();
     }
-  }, [isOpen]);
+  }, [isOpen, initSession]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -43,6 +86,29 @@ export const ChatInterface: React.FC = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages, isOpen]);
+
+  // Clear chat: wipe DB, reset sessionId in localStorage, reset UI
+  const handleClearChat = useCallback(async () => {
+    // 1. Wipe from database (best-effort)
+    if (user) {
+      deleteChatHistory(sessionId);  // fire-and-forget
+    }
+
+    // 2. Generate new session, persist to localStorage
+    const newSessionId = crypto.randomUUID();
+    localStorage.setItem(SESSION_STORAGE_KEY, newSessionId);
+    setSessionId(newSessionId);
+
+    // 3. Reset UI state
+    chatReadyRef.current = false;
+    setMessages([]);
+
+    // 4. Re-init (shows welcome message, no history to load for new session)
+    setTimeout(() => {
+      chatReadyRef.current = true;
+      setMessages([{ ...WELCOME_MESSAGE, id: crypto.randomUUID(), timestamp: Date.now() }]);
+    }, 50);
+  }, [user, sessionId]);
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -80,6 +146,9 @@ export const ChatInterface: React.FC = () => {
       timestamp: Date.now()
     };
 
+    // Snapshot BEFORE state update — avoids stale closure issue
+    const currentMessages = messages;
+
     setMessages(prev => [...prev, userMsg]);
     const messageToSend = input;
     setInput('');
@@ -87,7 +156,16 @@ export const ChatInterface: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const responseText = await chatWithBot(messageToSend);
+      // Build history from all real messages (skip the welcome message)
+      const history = currentMessages
+        .filter(m => m.id !== 'init')
+        .filter(m => m.text.trim().length > 0)
+        .map(m => ({
+          role: m.role as 'user' | 'model',
+          content: m.text,
+        }));
+
+      const responseText = await chatWithBot(messageToSend, history, sessionId);
 
       const botMsg: ChatMessage = {
         id: crypto.randomUUID(),
@@ -136,13 +214,29 @@ export const ChatInterface: React.FC = () => {
                 <h3 className="font-bold">Plant Assistant</h3>
                 <p className="text-xs text-emerald-100 flex items-center gap-1">
                   <span className="w-2 h-2 bg-green-300 rounded-full animate-pulse" />
-                  Online • Local AI
+                  {isLoadingHistory ? 'Loading your chat...' : 'Online • Local AI'}
+                  {!isLoadingHistory && messages.filter(m => m.id !== 'init').length > 0 && (
+                    <span className="ml-1 opacity-75">
+                      • {Math.floor(messages.filter(m => m.id !== 'init').length / 2)} turns
+                    </span>
+                  )}
                 </p>
               </div>
             </div>
 
             {/* Window Controls */}
             <div className="flex items-center gap-1">
+              {/* Clear button — only shown when there are real messages */}
+              {messages.filter(m => m.id !== 'init').length > 0 && (
+                <button
+                  onClick={handleClearChat}
+                  className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
+                  title="Clear chat history"
+                  disabled={isLoading}
+                >
+                  <Trash2 size={16} />
+                </button>
+              )}
               <button
                 onClick={() => setIsMaximized(!isMaximized)}
                 className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
@@ -162,6 +256,15 @@ export const ChatInterface: React.FC = () => {
 
           {/* Messages */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+            {/* History loading indicator */}
+            {isLoadingHistory && (
+              <div className="flex justify-center py-4">
+                <div className="flex items-center gap-2 text-xs text-gray-400">
+                  <Loader2 size={14} className="animate-spin text-emerald-500" />
+                  Restoring your conversation...
+                </div>
+              </div>
+            )}
             {messages.map((msg) => (
               <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[85%] rounded-2xl p-3 ${msg.role === 'user'

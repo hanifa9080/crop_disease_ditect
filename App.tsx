@@ -19,8 +19,7 @@ import { AnalysisResult } from './components/AnalysisResult';
 import { HistoryView } from './components/HistoryView';
 import { ChatInterface } from './components/ChatInterface';
 import { CameraCapture } from './components/CameraCapture';
-import { AdminLogin } from './components/AdminLogin';
-import { AdminDashboard } from './components/AdminDashboard';
+
 import { CropRecommendation } from './components/CropRecommendation';
 import { ScanAnimation } from './components/ScanAnimation';
 import { Sprout, Loader2, Leaf, Sun, History as HistoryIcon, ArrowLeft, LogOut, Wheat } from 'lucide-react';
@@ -32,6 +31,7 @@ import { Sprout, Loader2, Leaf, Sun, History as HistoryIcon, ArrowLeft, LogOut, 
 const mapReportToResult = (report: DiseaseReport): PlantAnalysisResult => ({
   isPlant: report.isPlant,
   plantName: report.plantName,
+  diseaseName: report.diseaseName || '',
   confidence: report.confidence,
   alternatives: report.alternatives || [],
   issues: report.issues,
@@ -48,8 +48,7 @@ const App: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showHistory, setShowHistory] = useState(false);
   const [showCamera, setShowCamera] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [adminChecked, setAdminChecked] = useState(false);
+
   const [showCropRec, setShowCropRec] = useState(false);
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [folders, setFolders] = useState<PlantFolder[]>([]);
@@ -205,24 +204,7 @@ const App: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // ── Admin session check ────────────────────────────────────────────────
-  useEffect(() => {
-    fetch('/api/admin/me', { credentials: 'include' })
-      .then(r => r.ok ? r.json() : null)
-      .then(a => { setIsAdmin(!!a); setAdminChecked(true); })
-      .catch(() => setAdminChecked(true));
-  }, []);
 
-  // ── Admin Route Gate ────────────────────────────────────────────────
-  if (window.location.pathname.startsWith('/admin')) {
-    if (!adminChecked) return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-900">
-        <div className="w-10 h-10 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-    if (!isAdmin) return <AdminLogin onSuccess={() => setIsAdmin(true)} />;
-    return <AdminDashboard onLogout={() => { setIsAdmin(false); window.location.href = '/'; }} />;
-  }
 
   // ── Mandatory Auth Gate ────────────────────────────────────────────────
   // While the cookie session is being verified, show a spinner

@@ -44,6 +44,7 @@ export interface ExternalResource {
 export interface DiseaseReport {
     isPlant: boolean;
     plantName: string;
+    diseaseName: string;
     confidence: number;
     alternatives: string[];
     issues: PlantHealthIssues;
@@ -113,13 +114,18 @@ export const classifyImage = async (base64Image: string): Promise<Classification
 
 
 /**
- * Agricultural chatbot — stateless text-only interaction via Gemma LLM.
+ * Agricultural chatbot — sends full conversation history so Gemma has memory.
  */
-export const chatWithBot = async (message: string): Promise<string> => {
+export const chatWithBot = async (
+    message: string,
+    history: Array<{ role: 'user' | 'model'; content: string }> = [],
+    sessionId?: string
+): Promise<string> => {
     const response = await fetch(`${BACKEND_URL}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message }),
+        credentials: "include",
+        body: JSON.stringify({ message, history, session_id: sessionId }),
     });
 
     if (!response.ok) {
@@ -171,6 +177,36 @@ export const checkHealth = async (): Promise<{ status: string }> => {
  */
 const authFetch = (url: string, opts: RequestInit = {}) =>
     fetch(`${BACKEND_URL}${url}`, { ...opts, credentials: 'include' });
+
+
+// ── Auth ─────────────────────────────────────────────────────────────────────
+
+/** Verify OTP code after registration. */
+export const verifyOtp = async (email: string, otp: string): Promise<any> => {
+    const r = await authFetch('/auth/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp }),
+    });
+    if (!r.ok) {
+        const e = await r.json().catch(() => ({ detail: 'Verification failed' }));
+        throw new Error(e.detail || 'Verification failed');
+    }
+    return r.json();
+};
+
+/** Resend a new OTP to the user's email. */
+export const resendOtp = async (email: string): Promise<void> => {
+    const r = await authFetch('/auth/resend-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp: '' }),
+    });
+    if (!r.ok) {
+        const e = await r.json().catch(() => ({ detail: 'Could not resend OTP' }));
+        throw new Error(e.detail || 'Could not resend OTP');
+    }
+};
 
 
 // ── History ───────────────────────────────────────────────────────────────────
@@ -236,4 +272,42 @@ export const createFolderInDB = async (name: string): Promise<any> => {
 /** Delete a folder (scans inside are ungrouped, not deleted). */
 export const deleteFolderFromDB = async (folderId: string): Promise<void> => {
     await authFetch(`/folders/${folderId}`, { method: 'DELETE' });
+};
+
+
+// ── Chat History (persistent) ─────────────────────────────────────────────────
+
+/**
+ * Load persisted chat history for a session from MySQL.
+ * Called on chat open to restore conversation after page refresh.
+ * Returns empty array if session not found or user not logged in.
+ */
+export const fetchChatHistory = async (
+    sessionId: string
+): Promise<Array<{ role: 'user' | 'model'; content: string; timestamp: number }>> => {
+    try {
+        const r = await authFetch(`/chat/history?session_id=${encodeURIComponent(sessionId)}`);
+        if (!r.ok) return [];
+        const data = await r.json();
+        return data.messages || [];
+    } catch {
+        return [];
+    }
+};
+
+
+/**
+ * Delete all messages for a session from the database.
+ * Called when the farmer clicks the Clear Chat button.
+ */
+export const deleteChatHistory = async (sessionId: string): Promise<void> => {
+    try {
+        await authFetch('/chat/history', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ session_id: sessionId }),
+        });
+    } catch {
+        // Silently ignore — UI already cleared
+    }
 };

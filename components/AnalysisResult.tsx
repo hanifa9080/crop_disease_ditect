@@ -55,7 +55,7 @@ export function buildReportHTML(
                      font-weight:600;color:#374151;width:36%">${label}</td>
           <td style="padding:10px 14px;border-bottom:1px solid #f3f4f6;
                      color:${issue.detected ? '#dc2626' : '#059669'}">
-            ${issue.detected ? '⚠ ' + issue.details : '✓ Looks healthy'}
+            ${issue.detected ? '⚠ ' + issue.details : '✓ ' + issue.details}
           </td>
         </tr>`;
     }).join('') : '';
@@ -72,11 +72,14 @@ export function buildReportHTML(
       </div>
     </div>`).join('') || '';
 
-  const tipsHTML = result.preventionTips?.map(tip =>
-    `<div style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #d1fae5">
+  const tipsHTML = result.preventionTips?.map(tip => {
+    const isObj = typeof tip !== 'string';
+    const text = isObj ? `<strong>${(tip as any).title || ''}:</strong> ${(tip as any).instruction || ''}` : tip;
+    return `<div style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #d1fae5">
       <span style="color:#059669;font-size:18px;line-height:1;flex-shrink:0">•</span>
-      <span style="color:#065f46;font-size:14px;line-height:1.5">${tip}</span>
-    </div>`).join('') || '';
+      <span style="color:#065f46;font-size:14px;line-height:1.5">${text}</span>
+    </div>`;
+  }).join('') || '';
 
   const resourcesHTML = result.expertResources?.map(r =>
     `<div style="background:#f0fdf4;border:1px solid #6ee7b7;border-radius:10px;
@@ -145,7 +148,12 @@ export function buildReportHTML(
       Generated<br>${new Date().toLocaleDateString()}<br>${new Date().toLocaleTimeString()}
     </div>
     <div class="hdr-label">🌿 UZHAVAN AI — AI Crop Disease Expert</div>
-    <div class="plant-name">${result.plantName}</div>
+    <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:13px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,0.7)">PLANT</div>
+      <div class="plant-name" style="margin-bottom:8px">${result.plantName}</div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,0.7)">DISEASE</div>
+      <div style="font-size:24px;font-weight:700;color:white">${result.diseaseName}</div>
+    </div>
     <div class="badges">
       <span class="badge b-conf">${Number(result.confidence).toFixed(1)}% Confidence</span>
       <span class="badge b-status">${statusLabel}</span>
@@ -194,6 +202,7 @@ export function buildReportTXT(result: PlantAnalysisResult): string {
   const line = '─'.repeat(54);
   let t = `UZHAVAN AI — Crop Disease Report\nGenerated : ${new Date().toLocaleString()}\n${line}\n\n`;
   t += `PLANT     : ${result.plantName}\n`;
+  t += `DISEASE   : ${result.diseaseName}\n`;
   t += `CONFIDENCE: ${Number(result.confidence).toFixed(1)}%\n`;
   t += `STATUS    : ${isHealthy ? '✓ Healthy' : (result.diagnosis?.split('.')[0] || 'Disease Detected')}\n\n`;
   t += `DIAGNOSIS\n${line}\n${result.diagnosis}\n\n`;
@@ -202,7 +211,7 @@ export function buildReportTXT(result: PlantAnalysisResult): string {
     Object.entries(result.issues).forEach(([key, val]) => {
       const issue = val as any;
       const label = key.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()).padEnd(22);
-      t += `${label}${issue.detected ? '⚠  ' + issue.details : '✓  Looks healthy'}\n`;
+      t += `${label}${issue.detected ? '⚠  ' + issue.details : '✓  ' + issue.details}\n`;
     });
     t += '\n';
   }
@@ -213,7 +222,10 @@ export function buildReportTXT(result: PlantAnalysisResult): string {
   }
   if (result.preventionTips?.length) {
     t += `PREVENTION TIPS\n${line}\n`;
-    result.preventionTips.forEach((tip, i) => { t += `${i + 1}. ${tip}\n`; });
+    result.preventionTips.forEach((tip, i) => {
+      const text = typeof tip === 'string' ? tip : `${(tip as any).title || ''}: ${(tip as any).instruction || ''}`;
+      t += `${i + 1}. ${text}\n`;
+    });
     t += '\n';
   }
   if (result.expertResources?.length) {
@@ -361,7 +373,7 @@ const HealthIndicator: React.FC<{ label: string; issue: IssueCheck; icon: React.
           {label}
         </h4>
         <p className={`text-sm ${issue.detected ? 'text-red-700' : 'text-emerald-700'}`}>
-          {issue.detected ? issue.details : "Looks healthy!"}
+          {issue.details}
         </p>
       </div>
     </div>
@@ -432,7 +444,10 @@ const SinglePlantResult: React.FC<{ result: PlantAnalysisResult, index: number, 
     }
 
     if (result.preventionTips && result.preventionTips.length > 0) {
-      text += 'Prevention tips: ' + result.preventionTips.join('. ') + '.';
+      const tipsText = result.preventionTips.map(tip =>
+        typeof tip === 'string' ? tip : `${(tip as any).title || ''}: ${(tip as any).instruction || ''}`
+      ).join('. ');
+      text += 'Prevention tips: ' + tipsText + '.';
     }
 
     return text;
@@ -552,9 +567,20 @@ const SinglePlantResult: React.FC<{ result: PlantAnalysisResult, index: number, 
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-2 text-emerald-100">
             <Sprout size={18} />
-            <span className="uppercase tracking-wider text-xs font-bold">Plant #{index + 1} Identification</span>
+            <span className="uppercase tracking-wider text-xs font-bold">Plant Analysis Report</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold mb-2 pr-12 text-shadow-sm">{result.plantName}</h1>
+
+          <div className="space-y-1 mb-4">
+            <h1 className="text-2xl sm:text-3xl font-black pr-12 text-shadow-sm flex items-baseline gap-2">
+              <span className="text-sm uppercase tracking-[0.2em] font-bold text-emerald-300/80">plant</span>
+              <span className="uppercase">{result.plantName}</span>
+            </h1>
+            <h2 className="text-xl sm:text-2xl font-bold pr-12 text-shadow-sm flex items-baseline gap-2">
+              <span className="text-xs uppercase tracking-[0.2em] font-bold text-emerald-300/80">disease</span>
+              <span className="text-emerald-50">{result.diseaseName}</span>
+            </h2>
+          </div>
+
           <div className="flex flex-wrap items-center gap-4 text-emerald-50 text-sm">
             <span className="bg-emerald-500/50 px-3 py-1 rounded-full border border-emerald-400/30 backdrop-blur-sm">
               {result.confidence}% Confidence
@@ -604,15 +630,17 @@ const SinglePlantResult: React.FC<{ result: PlantAnalysisResult, index: number, 
           )}
         </button>
 
-        {/* Health Check Grid */}
+        {/* Health Check Grid — all 8 fields shown individually, matches the PDF report */}
         {result.issues && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            <HealthIndicator label="Pests" issue={result.issues.pests} icon={<Bug size={20} />} />
             <HealthIndicator label="Diseases" issue={result.issues.diseases} icon={<Activity size={20} />} />
-            <HealthIndicator label="Watering" issue={result.issues.underwatering.detected ? result.issues.underwatering : result.issues.overwatering} icon={<Droplets size={20} />} />
+            <HealthIndicator label="Pests" issue={result.issues.pests} icon={<Bug size={20} />} />
+            <HealthIndicator label="Overwatering" issue={result.issues.overwatering} icon={<Droplets size={20} />} />
+            <HealthIndicator label="Underwatering" issue={result.issues.underwatering} icon={<Droplets size={20} />} />
             <HealthIndicator label="Sunlight" issue={result.issues.sunlight} icon={<Sun size={20} />} />
             <HealthIndicator label="Nutrients" issue={result.issues.nutrientDeficiency} icon={<HeartPulse size={20} />} />
-            <HealthIndicator label="Soil & Stress" issue={result.issues.soil.detected ? result.issues.soil : result.issues.generalStress} icon={<ThermometerSun size={20} />} />
+            <HealthIndicator label="Soil" issue={result.issues.soil} icon={<Sprout size={20} />} />
+            <HealthIndicator label="General Stress" issue={result.issues.generalStress} icon={<ThermometerSun size={20} />} />
           </div>
         )}
 
@@ -648,10 +676,17 @@ const SinglePlantResult: React.FC<{ result: PlantAnalysisResult, index: number, 
               Prevention & Care Tips
             </h2>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {result.preventionTips.map((tip, idx) => (
+              {result.preventionTips.map((tip: any, idx) => (
                 <li key={idx} className="flex items-start gap-3 bg-white p-4 rounded-xl shadow-sm border border-emerald-100/50">
                   <span className="block w-2 h-2 mt-2 rounded-full bg-emerald-400 shrink-0" />
-                  <span className="text-emerald-800">{tip}</span>
+                  <span className="text-emerald-800">
+                    {typeof tip === 'string' ? tip : (
+                      <>
+                        {tip.title && <strong className="mr-1">{tip.title}:</strong>}
+                        {tip.instruction}
+                      </>
+                    )}
+                  </span>
                 </li>
               ))}
             </ul>

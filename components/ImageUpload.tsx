@@ -81,7 +81,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelect, onOpenA
           Check Your Plants' Health
         </h3>
         <p className="text-gray-500 mb-8 max-w-sm mx-auto">
-          Upload a photo of a single plant, a leaf, or your <span className="text-emerald-600 font-bold">whole garden bed</span> for an instant check-up.
+          Upload a crop leaf image for disease detection.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
